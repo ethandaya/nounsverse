@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400;900&display=swap");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Londrina Solid", sans-serif;
+}
+
+h4,
+h5,
+h6,
+a,
+code,
+li {
+  font-family: "PT Root UI", sans-serif;
+}
+
+@font-face {
+  font-family: "PT Root UI";
+  src: url(../public/assets/fonts/PT_Root_UI/PT-Root-UI_Regular.woff2)
+      format("woff2"),
+    url(../public/assets/fonts/PT_Root_UI/PT-Root-UI_Regular.woff)
+      format("woff");
+}
+
+@font-face {
+  font-family: "PT Root UI";
+  font-weight: 500;
+  src: url(../public/assets/fonts/PT_Root_UI/PT-Root-UI_Medium.woff2)
+      format("woff2"),
+    url(../public/assets/fonts/PT_Root_UI/PT-Root-UI_Medium.woff) format("woff");
+}
+
+@font-face {
+  font-family: "PT Root UI";
+  font-weight: bold;
+  src: url(../public/assets/fonts/PT_Root_UI/PT-Root-UI_Bold.woff2)
+      format("woff2"),
+    url(../public/assets/fonts/PT_Root_UI/PT-Root-UI_Bold.woff) format("woff");
+}
