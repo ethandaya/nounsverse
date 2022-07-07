@@ -21,6 +21,7 @@ const AUCTION_FRAGMENT = gql`
     noun {
       id
     }
+    endTime
     bids {
       id
       bidder {

@@ -13,6 +13,7 @@ export type Noun = {
 };
 
 export type Auction = {
+  endTime: string;
   noun: Noun;
   bids: Bid[];
 };
