@@ -4,6 +4,7 @@ import { Auction } from "../services/noun.service";
 import subgraphService from "../services/subgraph.service";
 import { BidRow } from "../components/BidRow";
 import { Header } from "../components/Header";
+import { BidTable } from "../components/BidTable";
 
 const PAGE_SIZE = 5;
 
@@ -35,11 +36,7 @@ const Home: NextPage = () => {
         auctions.map((auction) => (
           <div key={auction.noun.id}>
             <h3>{auction.noun.id}</h3>
-            <ul>
-              {auction.bids.map((bid) => (
-                <BidRow key={bid.id} bid={bid} />
-              ))}
-            </ul>
+            <BidTable bids={auction.bids} />
           </div>
         ))
       )}

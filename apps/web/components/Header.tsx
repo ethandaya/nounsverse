@@ -11,7 +11,6 @@ export function Header() {
       <h5>{auction?.noun.id}</h5>
       <h5>Bids: {auction?.bids.length}</h5>
       <h5>Ends In: {auction?.endTime}</h5>
-      <h5>Connected Wallet: ?</h5>
     </header>
   );
 }

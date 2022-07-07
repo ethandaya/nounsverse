@@ -24,6 +24,9 @@ const AUCTION_FRAGMENT = gql`
     endTime
     bids {
       id
+      amount
+      blockNumber
+      blockTimestamp
       bidder {
         ...AccountFragment
       }

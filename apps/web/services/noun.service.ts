@@ -6,6 +6,8 @@ export type Account = {
 export type Bid = {
   id: string;
   bidder: Account;
+  blockNumber: number;
+  blockTimestamp: number;
 };
 
 export type Noun = {
