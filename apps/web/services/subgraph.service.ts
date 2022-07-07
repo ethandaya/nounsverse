@@ -30,8 +30,13 @@ const GET_AUCTION_BY_ID = gql`
 `;
 
 const GET_AUCTIONS_BY_ID = gql`
-  query GetAuctionsById($order: String, $limit: Int) {
-    auctions(orderBy: endTime, orderDirection: $order, first: $limit) {
+  query GetAuctionsById($order: String, $limit: Int, $offset: Int) {
+    auctions(
+      orderBy: endTime
+      orderDirection: $order
+      first: $limit
+      skip: $offset
+    ) {
       ...AuctionFragment
     }
   }
@@ -50,11 +55,13 @@ class SubgraphService implements NounService {
 
   public async getAuctions(
     order: "DESC" | "ASC",
-    limit: number
+    limit: number,
+    offset: number
   ): Promise<Auction[]> {
     const resp = await this.client.request(GET_AUCTIONS_BY_ID, {
       order: order.toLowerCase(),
       limit,
+      offset,
     });
     return resp.auctions;
   }

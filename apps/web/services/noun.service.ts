@@ -1,5 +1,9 @@
+export type Noun = {
+  id: string;
+};
+
 export type Auction = {
-  nounId: string;
+  noun: Noun;
 };
 
 /*
@@ -9,5 +13,9 @@ export type Auction = {
  */
 export interface NounService {
   getAuction(nounId: string): Promise<Auction>;
-  getAuctions(order: "DESC" | "ASC", limit: number): Promise<Auction[]>;
+  getAuctions(
+    order: "DESC" | "ASC",
+    limit: number,
+    offset: number
+  ): Promise<Auction[]>;
 }
