@@ -9,14 +9,33 @@ if (!NEXT_PUBLIC_SUBGRAPH_URL) {
 
 const SubgraphClient = new GraphQLClient(NEXT_PUBLIC_SUBGRAPH_URL);
 
+const AUCTION_FRAGMENT = gql`
+  fragment AuctionFragment on Auction {
+    noun {
+      id
+    }
+    bids {
+      id
+    }
+  }
+`;
+
 const GET_AUCTION_BY_ID = gql`
   query GetAuctionById($id: String) {
     auction(id: $id) {
-      noun {
-        id
-      }
+      ...AuctionFragment
     }
   }
+  ${AUCTION_FRAGMENT}
+`;
+
+const GET_AUCTIONS_BY_ID = gql`
+  query GetAuctionsById($order: String, $limit: Int) {
+    auctions(orderBy: endTime, orderDirection: $order, first: $limit) {
+      ...AuctionFragment
+    }
+  }
+  ${AUCTION_FRAGMENT}
 `;
 
 class SubgraphService implements NounService {
@@ -27,6 +46,17 @@ class SubgraphService implements NounService {
       id: nounId,
     });
     return resp.auction;
+  }
+
+  public async getAuctions(
+    order: "DESC" | "ASC",
+    limit: number
+  ): Promise<Auction[]> {
+    const resp = await this.client.request(GET_AUCTIONS_BY_ID, {
+      order: order.toLowerCase(),
+      limit,
+    });
+    return resp.auctions;
   }
 }
 
