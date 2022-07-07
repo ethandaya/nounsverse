@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import useSWRInfinite from "swr/infinite";
-import { Header } from "../components/Header";
 import { Auction } from "../services/noun.service";
 import subgraphService from "../services/subgraph.service";
+import { BidRow } from "../components/BidRow";
 
 const PAGE_SIZE = 5;
 
@@ -17,6 +17,7 @@ const getKey = (
 const Home: NextPage = () => {
   const {
     data = [],
+    error,
     size,
     setSize,
   } = useSWRInfinite<Auction[]>(getKey, {
@@ -24,14 +25,20 @@ const Home: NextPage = () => {
       subgraphService.getAuctions(...args),
   });
 
-  console.log({ data });
+  console.log({ data, error });
 
   return (
     <div>
-      <Header />
       {data.map((auctions) =>
         auctions.map((auction) => (
-          <pre key={auction.noun.id}>{JSON.stringify(auction, null, 2)}</pre>
+          <div key={auction.noun.id}>
+            <h3>{auction.noun.id}</h3>
+            <ul>
+              {auction.bids.map((bid) => (
+                <BidRow key={bid.id} bid={bid} />
+              ))}
+            </ul>
+          </div>
         ))
       )}
       <button onClick={() => setSize(size + 1)}>NEXT PAGE</button>

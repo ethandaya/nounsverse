@@ -1,9 +1,20 @@
+export type Account = {
+  address: string;
+  tokenBalanceRaw: string;
+};
+
+export type Bid = {
+  id: string;
+  bidder: Account;
+};
+
 export type Noun = {
   id: string;
 };
 
 export type Auction = {
   noun: Noun;
+  bids: Bid[];
 };
 
 /*

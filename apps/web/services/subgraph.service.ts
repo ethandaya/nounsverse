@@ -9,6 +9,13 @@ if (!NEXT_PUBLIC_SUBGRAPH_URL) {
 
 const SubgraphClient = new GraphQLClient(NEXT_PUBLIC_SUBGRAPH_URL);
 
+const ACCOUNT_FRAGMENT = gql`
+  fragment AccountFragment on Account {
+    address: id
+    tokenBalanceRaw
+  }
+`;
+
 const AUCTION_FRAGMENT = gql`
   fragment AuctionFragment on Auction {
     noun {
@@ -16,8 +23,12 @@ const AUCTION_FRAGMENT = gql`
     }
     bids {
       id
+      bidder {
+        ...AccountFragment
+      }
     }
   }
+  ${ACCOUNT_FRAGMENT}
 `;
 
 const GET_AUCTION_BY_ID = gql`
