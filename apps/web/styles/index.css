@@ -1,4 +1,4 @@
-@import "fonts.scss";
+@import url("https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400;500;600;700;800;900&display=swap");
 
 html,
 body {
@@ -26,5 +26,5 @@ a,
 code,
 li {
   font-weight: 300;
-  font-family: 'Azeret Mono', monospace;
+  font-family: "Azeret Mono", monospace;
 }

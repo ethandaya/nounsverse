@@ -1,4 +1,4 @@
-import { Auction, Bid, GetBidOptions, NounService } from "./noun.service";
+import { Auction, Bid, GetBidOptions, Noun, NounService } from "./noun.service";
 import { gql, GraphQLClient } from "graphql-request";
 
 const NEXT_PUBLIC_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
@@ -29,21 +29,43 @@ const BID_FRAGMENT = gql`
   ${ACCOUNT_FRAGMENT}
 `;
 
+const NOUN_FRAGMENT = gql`
+  fragment NounFragment on Noun {
+    id
+    owner {
+      ...AccountFragment
+    }
+  }
+`;
+
 const AUCTION_FRAGMENT = gql`
   fragment AuctionFragment on Auction {
     noun {
-      id
+      ...NounFragment
     }
+    amount
+    settled
+    startTime
     endTime
     bids {
       ...BidFragment
     }
   }
   ${BID_FRAGMENT}
+  ${NOUN_FRAGMENT}
+`;
+
+const GET_NOUN_BY_ID = gql`
+  query GetNounById($nounId: ID!) {
+    noun(id: $nounId) {
+      ...NounFragment
+    }
+  }
+  ${NOUN_FRAGMENT}
 `;
 
 const GET_AUCTION_BY_ID = gql`
-  query GetAuctionById($id: String) {
+  query GetAuctionById($id: ID!) {
     auction(id: $id) {
       ...AuctionFragment
     }
@@ -52,7 +74,7 @@ const GET_AUCTION_BY_ID = gql`
 `;
 
 const GET_AUCTIONS_BY_ID = gql`
-  query GetAuctionsById($order: String, $limit: Int, $offset: Int) {
+  query GetAuctions($order: String, $limit: Int, $offset: Int) {
     auctions(
       orderBy: endTime
       orderDirection: $order
@@ -76,6 +98,13 @@ const GET_BIDS = gql`
 
 class SubgraphService implements NounService {
   constructor(private readonly client: GraphQLClient) {}
+
+  public async getNoun(nounId: string): Promise<Noun> {
+    const resp = await this.client.request(GET_NOUN_BY_ID, {
+      nounId,
+    });
+    return resp.noun;
+  }
 
   public async getAuction(nounId: string): Promise<Auction> {
     const resp = await this.client.request(GET_AUCTION_BY_ID, {
@@ -105,4 +134,5 @@ class SubgraphService implements NounService {
   }
 }
 
+// TODO - lilnouns service
 export default new SubgraphService(SubgraphClient);

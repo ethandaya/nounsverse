@@ -3,6 +3,7 @@ import useSWRInfinite from "swr/infinite";
 import { Auction } from "../services/noun.service";
 import subgraphService from "../services/subgraph.service";
 import { BidTable } from "../components/BidTable";
+import { AuctionRow } from "../components/AuctionRow";
 
 const PAGE_SIZE = 3;
 
@@ -29,10 +30,7 @@ const Home: NextPage = () => {
       {/*<Header />*/}
       {data.map((auctions) =>
         auctions.map((auction) => (
-          <div key={auction.noun.id}>
-            <h1>NOUN {auction.noun.id}</h1>
-            <BidTable bids={auction.bids} />
-          </div>
+          <AuctionRow key={auction.noun.id} auction={auction} />
         ))
       )}
       <button onClick={() => setSize(size + 1)}>NEXT PAGE</button>

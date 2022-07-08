@@ -1,3 +1,5 @@
+import exp from "constants";
+
 export type Account = {
   address: string;
   tokenBalanceRaw: string;
@@ -13,10 +15,14 @@ export type Bid = {
 
 export type Noun = {
   id: string;
+  owner: Account;
 };
 
 export type Auction = {
-  endTime: string;
+  settled: boolean;
+  amount: string;
+  startTime: number;
+  endTime: number;
   noun: Noun;
   bids: Bid[];
 };
@@ -31,6 +37,7 @@ export type GetBidOptions = {
  * as more nounsapi's are build without massive refactor
  */
 export interface NounService {
+  getNoun(nounId: string): Promise<Noun>;
   getAuction(nounId: string): Promise<Auction>;
   getAuctions(
     order: "DESC" | "ASC",
