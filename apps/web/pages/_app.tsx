@@ -1,4 +1,4 @@
-import "../styles/index.css";
+import "../styles/index.scss";
 import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
 import { chains, wagmiClient } from "../utils/network";

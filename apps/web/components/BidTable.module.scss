@@ -1,3 +1,18 @@
+@import "../styles/colors";
+
 .BidTableRoot {
   width: 100%;
+}
+
+.TableHeaderRoot {
+  display: grid;
+  margin-bottom: 24px;
+}
+
+.TableHeaderItem {
+  margin: 8px 0;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: $secondary;
+  text-transform: uppercase;
 }

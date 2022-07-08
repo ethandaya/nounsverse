@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import useSWRInfinite from "swr/infinite";
 import { Auction } from "../services/noun.service";
 import subgraphService from "../services/subgraph.service";
-import { BidRow } from "../components/BidRow";
 import { Header } from "../components/Header";
 import { BidTable } from "../components/BidTable";
 
@@ -19,7 +18,6 @@ const getKey = (
 const Home: NextPage = () => {
   const {
     data = [],
-    error,
     size,
     setSize,
   } = useSWRInfinite<Auction[]>(getKey, {
@@ -27,15 +25,12 @@ const Home: NextPage = () => {
       subgraphService.getAuctions(...args),
   });
 
-  console.log({ data, error });
-
   return (
     <div>
       <Header />
       {data.map((auctions) =>
         auctions.map((auction) => (
           <div key={auction.noun.id}>
-            <h3>{auction.noun.id}</h3>
             <BidTable bids={auction.bids} />
           </div>
         ))

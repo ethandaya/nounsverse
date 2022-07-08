@@ -8,6 +8,7 @@ export type Bid = {
   bidder: Account;
   blockNumber: number;
   blockTimestamp: number;
+  amount: string;
 };
 
 export type Noun = {
