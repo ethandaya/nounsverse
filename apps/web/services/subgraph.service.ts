@@ -1,4 +1,4 @@
-import { Auction, NounService } from "./noun.service";
+import { Auction, Bid, GetBidOptions, NounService } from "./noun.service";
 import { gql, GraphQLClient } from "graphql-request";
 
 const NEXT_PUBLIC_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
@@ -16,6 +16,19 @@ const ACCOUNT_FRAGMENT = gql`
   }
 `;
 
+const BID_FRAGMENT = gql`
+  fragment BidFragment on Bid {
+    id
+    amount
+    blockNumber
+    blockTimestamp
+    bidder {
+      ...AccountFragment
+    }
+  }
+  ${ACCOUNT_FRAGMENT}
+`;
+
 const AUCTION_FRAGMENT = gql`
   fragment AuctionFragment on Auction {
     noun {
@@ -23,16 +36,10 @@ const AUCTION_FRAGMENT = gql`
     }
     endTime
     bids {
-      id
-      amount
-      blockNumber
-      blockTimestamp
-      bidder {
-        ...AccountFragment
-      }
+      ...BidFragment
     }
   }
-  ${ACCOUNT_FRAGMENT}
+  ${BID_FRAGMENT}
 `;
 
 const GET_AUCTION_BY_ID = gql`
@@ -58,6 +65,15 @@ const GET_AUCTIONS_BY_ID = gql`
   ${AUCTION_FRAGMENT}
 `;
 
+const GET_BIDS = gql`
+  query GetBids($address: String) {
+    bids(where: { bidder: $address }) {
+      ...BidFragment
+    }
+  }
+  ${BID_FRAGMENT}
+`;
+
 class SubgraphService implements NounService {
   constructor(private readonly client: GraphQLClient) {}
 
@@ -79,6 +95,13 @@ class SubgraphService implements NounService {
       offset,
     });
     return resp.auctions;
+  }
+
+  public async getBids({ address }: GetBidOptions): Promise<Bid[]> {
+    const resp = await this.client.request(GET_BIDS, {
+      address,
+    });
+    return resp.bids;
   }
 }
 

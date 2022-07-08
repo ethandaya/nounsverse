@@ -21,6 +21,10 @@ export type Auction = {
   bids: Bid[];
 };
 
+export type GetBidOptions = {
+  address?: string;
+};
+
 /*
  * NounsService
  * Reusable service interface to allow multiple backend
@@ -33,4 +37,5 @@ export interface NounService {
     limit: number,
     offset: number
   ): Promise<Auction[]>;
+  getBids(opts: GetBidOptions): Promise<Bid[]>;
 }

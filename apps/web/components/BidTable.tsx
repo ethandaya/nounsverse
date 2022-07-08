@@ -1,6 +1,6 @@
 import { Bid } from "../services/noun.service";
 import { BidRow } from "./BidRow";
-import styles from "./BidTable.module.scss";
+import { Box, Text } from "degen";
 
 type BidTableProps = {
   bids: Bid[];
@@ -20,22 +20,23 @@ export const columnTemplate = columns.map((c) => c.col).join(" ");
 
 export function BidTable({ bids }: BidTableProps) {
   return (
-    <div className={styles.BidTableRoot}>
-      <div
-        className={styles.TableHeaderRoot}
+    <Box>
+      <Box
+        display="grid"
         style={{
           gridTemplateColumns: columnTemplate,
         }}
+        marginBottom="5"
       >
         {columns.map((col, idx) => (
-          <h6 key={idx} className={styles.TableHeaderItem}>
+          <Text transform="uppercase" as="h6" variant="label" key={idx}>
             {col.label}
-          </h6>
+          </Text>
         ))}
-      </div>
+      </Box>
       {bids.map((bid, idx) => (
         <BidRow key={idx} bid={bid} />
       ))}
-    </div>
+    </Box>
   );
 }

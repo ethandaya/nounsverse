@@ -2,10 +2,9 @@ import type { NextPage } from "next";
 import useSWRInfinite from "swr/infinite";
 import { Auction } from "../services/noun.service";
 import subgraphService from "../services/subgraph.service";
-import { Header } from "../components/Header";
 import { BidTable } from "../components/BidTable";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 3;
 
 const getKey = (
   pageIndex: number,
@@ -27,10 +26,11 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Header />
+      {/*<Header />*/}
       {data.map((auctions) =>
         auctions.map((auction) => (
           <div key={auction.noun.id}>
+            <h1>NOUN {auction.noun.id}</h1>
             <BidTable bids={auction.bids} />
           </div>
         ))

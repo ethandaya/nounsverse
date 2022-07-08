@@ -1,13 +1,10 @@
 @import "fonts.scss";
-@import "typography.scss";
-@import "colors.scss";
 
 html,
 body {
   margin: 0;
   padding: 0 16px;
   font-family: monospace;
-  background: $background;
 }
 
 a {
@@ -29,6 +26,5 @@ a,
 code,
 li {
   font-weight: 300;
-  font-family: 'IBM Plex Mono', monospace;
-  color: $text;
+  font-family: 'Azeret Mono', monospace;
 }
