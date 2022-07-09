@@ -71,6 +71,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
               </Heading>
 
               <a
+                rel="noreferrer"
                 href={getEtherscanLink(
                   EtherscanPageType.TOKEN,
                   NOUN_TOKEN_ADDRESS,
