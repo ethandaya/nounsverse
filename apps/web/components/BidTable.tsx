@@ -34,9 +34,11 @@ export function BidTable({ bids }: BidTableProps) {
           </Text>
         ))}
       </Box>
-      {bids.map((bid, idx) => (
-        <BidRow key={idx} bid={bid} />
-      ))}
+      {bids
+        .sort((a, b) => b.blockTimestamp - a.blockTimestamp)
+        .map((bid, idx) => (
+          <BidRow key={idx} bid={bid} />
+        ))}
     </Box>
   );
 }
