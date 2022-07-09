@@ -8,9 +8,11 @@ if (!ALCHEMY_API_KEY) {
   throw new Error("NEXT_PUBLIC_ALCHEMY_API_KEY is a required env var");
 }
 
+export const defaultProvider = alchemyProvider({ alchemyId: ALCHEMY_API_KEY });
+
 export const { chains, provider } = configureChains(
   [chain.mainnet],
-  [alchemyProvider({ alchemyId: ALCHEMY_API_KEY })]
+  [defaultProvider]
 );
 
 const { connectors } = getDefaultWallets({

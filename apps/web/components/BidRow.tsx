@@ -14,7 +14,10 @@ type BidRowProps = {
 };
 
 export function BidRow({ bid }: BidRowProps) {
-  const { ensName, avatarURI, balance } = useProfile(bid.bidder.address);
+  const { ensName, avatarURI, balance } = useProfile(
+    bid.bidder.address,
+    bid.blockNumber
+  );
   const { bids } = useBidsForAddress({
     address: bid.bidder.address,
     blockNumber: bid.blockNumber,
