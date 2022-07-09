@@ -1,6 +1,6 @@
 import useSWR, { SWRConfiguration } from "swr";
 import subgraphService from "../services/subgraph.service";
-import { GetBidOptions } from "../services/noun.service";
+import { GetBidOptions } from "../services/interfaces/noun.service";
 
 export function useBidsForAddress(
   options: GetBidOptions,

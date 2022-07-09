@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import useSWRInfinite from "swr/infinite";
-import { Auction } from "../services/noun.service";
+import { Auction } from "../services/interfaces/noun.service";
 import subgraphService from "../services/subgraph.service";
 import { AuctionRow } from "../components/AuctionRow";
 import { useInView } from "react-intersection-observer";

@@ -1,4 +1,10 @@
-import { Auction, Bid, GetBidOptions, Noun, NounService } from "./noun.service";
+import {
+  Auction,
+  Bid,
+  GetBidOptions,
+  Noun,
+  NounService,
+} from "./interfaces/noun.service";
 import { gql, GraphQLClient } from "graphql-request";
 
 const NEXT_PUBLIC_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;

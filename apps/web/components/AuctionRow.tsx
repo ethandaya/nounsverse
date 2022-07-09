@@ -1,6 +1,6 @@
 import { Avatar, Box, Heading, Text } from "degen";
 import { BidTable } from "./BidTable";
-import { Auction } from "../services/noun.service";
+import { Auction } from "../services/interfaces/noun.service";
 import { AuctionHero } from "./AuctionRow.css";
 import { toFixed } from "../utils/numbers";
 import { formatEther } from "ethers/lib/utils";
@@ -69,16 +69,17 @@ export function AuctionRow({ auction }: AuctionRowProps) {
               <Heading>
                 {ownerENSName || shortenAddress(noun.owner.address)}
               </Heading>
-              <Link
-                passHref
+
+              <a
                 href={getEtherscanLink(
                   EtherscanPageType.TOKEN,
                   NOUN_TOKEN_ADDRESS,
                   `a=${noun.owner.address}`
                 )}
+                target="_blank"
               >
-                <a target="_blank">View on Etherscan</a>
-              </Link>
+                View on Etherscan
+              </a>
             </Box>
           </Box>
         ) : (

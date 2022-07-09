@@ -1,4 +1,4 @@
-import { Bid } from "../services/noun.service";
+import { Bid } from "../services/interfaces/noun.service";
 import { BidRow } from "./BidRow";
 import { Box, Text } from "degen";
 

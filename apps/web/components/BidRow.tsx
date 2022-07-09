@@ -1,19 +1,21 @@
-import { Bid } from "../services/noun.service";
+import { Bid } from "../services/interfaces/noun.service";
 import { columnTemplate } from "./BidTable";
 import { Avatar, Box, Text } from "degen";
 import { shortenTx } from "../utils/address";
 import { formatEther } from "ethers/lib/utils";
-import { toFixed } from "../utils/numbers";
+import { mul, toFixed } from "../utils/numbers";
 import { useBidsForAddress } from "../hooks/useBidsForAddress";
 import formatDistanceToNow from "date-fns/formatDistanceToNowStrict";
 import fromUnixTime from "date-fns/fromUnixTime";
 import { useProfile } from "../hooks/useProfile";
+import { useEthPrice } from "../hooks/useEthPrice";
 
 type BidRowProps = {
   bid: Bid;
 };
 
 export function BidRow({ bid }: BidRowProps) {
+  const { rate } = useEthPrice(bid.blockNumber);
   const { ensName, avatarURI, balance } = useProfile(
     bid.bidder.address,
     bid.blockNumber
@@ -22,6 +24,7 @@ export function BidRow({ bid }: BidRowProps) {
     address: bid.bidder.address,
     blockNumber: bid.blockNumber,
   });
+
   return (
     <Box
       display="grid"
@@ -58,7 +61,7 @@ export function BidRow({ bid }: BidRowProps) {
       <Box display="flex" flexDirection="column">
         <Text transform="uppercase">{formatEther(bid.amount)}</Text>
         <Text transform="uppercase" color="textSecondary">
-          $...
+          ${rate ? mul(rate, formatEther(bid.amount)).toFixed(2) : ""}
         </Text>
       </Box>
       <Box display="flex" flexDirection="column">
@@ -66,7 +69,7 @@ export function BidRow({ bid }: BidRowProps) {
           {balance ? toFixed(formatEther(balance), 2) : ""}
         </Text>
         <Text transform="uppercase" color="textSecondary">
-          $...
+          ${rate && balance ? mul(rate, formatEther(balance)).toFixed(2) : ""}
         </Text>
       </Box>
       <Box>

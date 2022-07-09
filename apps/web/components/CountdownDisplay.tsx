@@ -102,6 +102,7 @@ export const CountdownDisplay = (props: CountdownDisplayProps) => {
     return () => {
       clearInterval(checkTimeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!timeLeft) {
