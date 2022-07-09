@@ -6,9 +6,11 @@ import { toFixed } from "../utils/numbers";
 import { formatEther } from "ethers/lib/utils";
 import { useNoun } from "../hooks/useNoun";
 import { useProfile } from "../hooks/useProfile";
-import { shortenAddress } from "../utils/address";
+import { NOUN_TOKEN_ADDRESS, shortenAddress } from "../utils/address";
 import { CountdownDisplay } from "./CountdownDisplay";
 import { format, fromUnixTime } from "date-fns";
+import Link from "next/link";
+import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 
 type AuctionRowProps = {
   auction: Auction;
@@ -67,6 +69,16 @@ export function AuctionRow({ auction }: AuctionRowProps) {
               <Heading>
                 {ownerENSName || shortenAddress(noun.owner.address)}
               </Heading>
+              <Link
+                passHref
+                href={getEtherscanLink(
+                  EtherscanPageType.TOKEN,
+                  NOUN_TOKEN_ADDRESS,
+                  `a=${noun.owner.address}`
+                )}
+              >
+                <a target="_blank">View on Etherscan</a>
+              </Link>
             </Box>
           </Box>
         ) : (

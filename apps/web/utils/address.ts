@@ -1,5 +1,7 @@
 import { getAddress } from "@ethersproject/address";
 
+export const NOUN_TOKEN_ADDRESS = "0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03";
+
 function shortenString(str: string, length: number = 4) {
   return (
     str.substring(0, length + 2) + "..." + str.substring(str.length - length)
