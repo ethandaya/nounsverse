@@ -7,8 +7,8 @@ import { formatEther } from "ethers/lib/utils";
 import { useNoun } from "../hooks/useNoun";
 import { useProfile } from "../hooks/useProfile";
 import { shortenAddress } from "../utils/address";
-import { CountdownDisplay, DurationDisplay } from "./CountdownDisplay";
-import { format, formatDuration, fromUnixTime } from "date-fns";
+import { CountdownDisplay } from "./CountdownDisplay";
+import { format, fromUnixTime } from "date-fns";
 
 type AuctionRowProps = {
   auction: Auction;
@@ -18,26 +18,41 @@ export function AuctionRow({ auction }: AuctionRowProps) {
   const { noun } = useNoun(auction.noun.id, {
     fallbackData: auction.noun,
   });
-  const { ensName, avatarURI } = useProfile(noun.owner.address);
+  const { ensName: ownerENSName, avatarURI: ownerAvatarURI } = useProfile(
+    noun.owner.address
+  );
+  const { ensName: bidderENSName, avatarURI: bidderAvatarURI } = useProfile(
+    noun.owner.address
+  );
 
   return (
     <Box>
       <Box display="grid" className={AuctionHero}>
-        <Heading>NOUN {auction.noun.id}</Heading>
+        <Box>
+          <Text variant="label">
+            {format(fromUnixTime(auction.startTime), "MMMM dd, yy")}
+          </Text>
+          <Heading>NOUN {auction.noun.id}</Heading>
+        </Box>
         <Box>
           <Text variant="label">
             {auction.settled ? "Winning Bid" : "Current Bid"}
           </Text>
           <Heading>{toFixed(formatEther(auction.amount), 2)}</Heading>
+          <Text>
+            {auction.settled
+              ? ownerENSName || shortenAddress(noun.owner.address)
+              : bidderENSName || shortenAddress(auction.bidder.address)}
+          </Text>
         </Box>
         {auction.settled ? (
           <Box>
             <Text variant="label">Holder</Text>
             <Box>
-              {avatarURI ? (
+              {ownerAvatarURI ? (
                 <Avatar
                   label="Avatar"
-                  src={avatarURI}
+                  src={ownerAvatarURI}
                   size="12"
                   shape="square"
                 />
@@ -49,7 +64,9 @@ export function AuctionRow({ auction }: AuctionRowProps) {
                   borderRadius="2xLarge"
                 />
               )}
-              <Heading>{ensName || shortenAddress(noun.owner.address)}</Heading>
+              <Heading>
+                {ownerENSName || shortenAddress(noun.owner.address)}
+              </Heading>
             </Box>
           </Box>
         ) : (
@@ -58,7 +75,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
             <Heading>
               <CountdownDisplay to={auction.endTime} />
             </Heading>
-            <Text variant="small">
+            <Text variant="small" transform="uppercase">
               Ends at {format(fromUnixTime(auction.endTime), "PP h:mm a")}
             </Text>
           </Box>

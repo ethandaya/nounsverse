@@ -36,6 +36,7 @@ const NOUN_FRAGMENT = gql`
       ...AccountFragment
     }
   }
+  ${ACCOUNT_FRAGMENT}
 `;
 
 const AUCTION_FRAGMENT = gql`
@@ -50,9 +51,13 @@ const AUCTION_FRAGMENT = gql`
     bids {
       ...BidFragment
     }
+    bidder {
+      ...AccountFragment
+    }
   }
   ${BID_FRAGMENT}
   ${NOUN_FRAGMENT}
+  ${ACCOUNT_FRAGMENT}
 `;
 
 const GET_NOUN_BY_ID = gql`
