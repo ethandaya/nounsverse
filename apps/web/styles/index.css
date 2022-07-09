@@ -3,8 +3,9 @@
 html,
 body {
   margin: 0;
-  padding: 0 16px;
+  padding: 0;
   font-family: monospace;
+  background: var(--colors-background);
 }
 
 a {

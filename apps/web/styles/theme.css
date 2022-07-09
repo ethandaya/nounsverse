@@ -1,0 +1,27 @@
+/*
+ * DEGEN DOESN'T PROVIDE A CUSTOM THEME
+ * IMPLEMENTATION SO OVERRIDE THE CSS VARS
+ * TO CUSTOMISE THE COLORS NEEDED
+ */
+
+[data-theme="dark"] {
+  --colors-black: rgb(0, 0, 0);
+  --colors-white: rgb(255, 255, 255);
+  --colors-current: currentColor;
+  --colors-inherit: inherit;
+  --colors-transparent: transparent;
+  --colors-background: var(--colors-black);
+  --colors-backgroundSecondary: rgb(10, 10, 10);
+  --colors-backgroundTertiary: rgb(20, 20, 20);
+  --colors-foreground: rgb(255, 255, 255);
+  --colors-foregroundSecondary: rgba(255, 255, 255, 0.1);
+  --colors-foregroundSecondaryHover: rgba(255, 255, 255, 0.15);
+  --colors-foregroundTertiary: rgba(255, 255, 255, 0.04);
+  --colors-groupBackground: rgb(10, 10, 10);
+  --colors-groupBorder: rgba(255, 255, 255, 0);
+  --colors-text: rgba(255, 255, 255, 0.7);
+  --colors-textPrimary: rgba(255, 255, 255, 1);
+  --colors-textSecondary: rgba(255, 255, 255, 0.5);
+  --colors-textTertiary: rgba(255, 255, 255, 0.35);
+  --colors-yellow: rgb(255, 226, 78);
+}
