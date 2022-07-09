@@ -15,7 +15,10 @@ type BidRowProps = {
 
 export function BidRow({ bid }: BidRowProps) {
   const { ensName, avatarURI, balance } = useProfile(bid.bidder.address);
-  const { bids } = useBidsForAddress(bid.bidder.address);
+  const { bids } = useBidsForAddress({
+    address: bid.bidder.address,
+    blockNumber: bid.blockNumber,
+  });
   return (
     <Box
       display="grid"
@@ -29,6 +32,7 @@ export function BidRow({ bid }: BidRowProps) {
       </Box>
       <Box>
         <Text transform="uppercase">{shortenTx(bid.id)}</Text>
+        <Text variant="label">{bid.blockIndex}</Text>
       </Box>
       <Box display="flex" flexDirection="row" justifyContent="flex-start">
         {avatarURI ? (
@@ -45,9 +49,7 @@ export function BidRow({ bid }: BidRowProps) {
           <Text transform="uppercase">
             {ensName || shortenTx(bid.bidder.address)}
           </Text>
-          <Text transform="uppercase" color="textSecondary">
-            {bid.bidder.tokenBalanceRaw} Nouns
-          </Text>
+          <Text color="textSecondary">{bid.bidder.tokenBalanceRaw} Nouns</Text>
         </Box>
       </Box>
       <Box display="flex" flexDirection="column">

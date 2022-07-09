@@ -1,5 +1,3 @@
-import exp from "constants";
-
 export type Account = {
   address: string;
   tokenBalanceRaw: string;
@@ -9,6 +7,7 @@ export type Bid = {
   id: string;
   bidder: Account;
   blockNumber: number;
+  blockIndex: number;
   blockTimestamp: number;
   amount: string;
 };
@@ -30,6 +29,7 @@ export type Auction = {
 
 export type GetBidOptions = {
   address?: string;
+  blockNumber?: number | string;
 };
 
 /*

@@ -1,10 +1,14 @@
 import useSWR, { SWRConfiguration } from "swr";
 import subgraphService from "../services/subgraph.service";
+import { GetBidOptions } from "../services/noun.service";
 
-export function useBidsForAddress(address: string, opts?: SWRConfiguration) {
+export function useBidsForAddress(
+  options: GetBidOptions,
+  opts?: SWRConfiguration
+) {
   const { data, ...rest } = useSWR(
-    ["getBidsForAddress", address],
-    (_, address) => subgraphService.getBids({ address }),
+    ["getBidsForAddress", options],
+    (_, options) => subgraphService.getBids(options),
     opts
   );
 

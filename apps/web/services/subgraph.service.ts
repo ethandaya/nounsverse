@@ -21,6 +21,7 @@ const BID_FRAGMENT = gql`
     id
     amount
     blockNumber
+    blockIndex: txIndex
     blockTimestamp
     bidder {
       ...AccountFragment
@@ -93,8 +94,8 @@ const GET_AUCTIONS_BY_ID = gql`
 `;
 
 const GET_BIDS = gql`
-  query GetBids($address: String) {
-    bids(where: { bidder: $address }) {
+  query GetBids($address: String, $blockNumber: Int) {
+    bids(where: { bidder: $address }, block: { number: $blockNumber }) {
       ...BidFragment
     }
   }
@@ -131,9 +132,18 @@ class SubgraphService implements NounService {
     return resp.auctions;
   }
 
-  public async getBids({ address }: GetBidOptions): Promise<Bid[]> {
+  public async getBids({
+    address,
+    blockNumber,
+  }: GetBidOptions): Promise<Bid[]> {
     const resp = await this.client.request(GET_BIDS, {
       address,
+      ...(blockNumber && {
+        blockNumber:
+          typeof blockNumber === "string"
+            ? parseInt(blockNumber, 10)
+            : blockNumber,
+      }),
     });
     return resp.bids;
   }
