@@ -51,7 +51,6 @@ const Home: NextPage = () => {
           <AuctionRow key={auction.noun.id} auction={auction} />
         ))
       )}
-      <button onClick={() => setSize(size + 1)}>NEXT PAGE</button>
       {!isRefreshing && !isLoadingInitialData && !isReachingEnd && (
         <Box ref={ref} as="div" display="flex" width="full" height="10" />
       )}
