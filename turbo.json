@@ -4,6 +4,14 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "web#build": {
+    "dependsOn": [
+      "^build",
+      "$NEXT_PUBLIC_SUBGRAPH_URL",
+      "$NEXT_PUBLIC_ALCHEMY_API_KEY"
+    ],
+    "outputs": [".next/**"]
+  },
     "lint": {
       "outputs": []
     },
