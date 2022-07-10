@@ -35,6 +35,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
           <Text
             variant="extraLarge"
             color={auction.settled ? "text" : "yellow"}
+            lineHeight="none"
           >
             NOUN {auction.noun.id}
           </Text>
@@ -46,6 +47,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
           <Text
             variant={auction.settled ? "medium" : "large"}
             color={auction.settled ? "text" : "yellow"}
+            marginBottom="1"
           >
             ETH {toFixed(formatEther(auction.amount), 2)}
           </Text>
@@ -101,11 +103,11 @@ export function AuctionRow({ auction }: AuctionRowProps) {
         ) : (
           <Box>
             <Text variant="label">Time Remaining</Text>
-            <Text variant="large" transform="uppercase">
+            <Text variant="large" transform="uppercase" marginBottom="1">
               <CountdownDisplay to={auction.endTime} />
             </Text>
             <Text transform="uppercase" color="textSecondary" weight="medium">
-              Ends at {format(fromUnixTime(auction.endTime), "PP h:mm a")}
+              {format(fromUnixTime(auction.endTime), "PP h:mm a")}
             </Text>
           </Box>
         )}

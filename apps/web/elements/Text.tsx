@@ -29,6 +29,13 @@ type Props = {
   padding?: BoxProps["padding"];
   paddingY?: BoxProps["paddingY"];
   paddingX?: BoxProps["paddingX"];
+  paddingTop?: BoxProps["paddingTop"];
+  paddingBottom?: BoxProps["paddingBottom"];
+  marginX?: BoxProps["marginX"];
+  marginY?: BoxProps["marginY"];
+  margin?: BoxProps["margin"];
+  marginBottom?: BoxProps["marginBottom"];
+  marginTop?: BoxProps["marginTop"];
 } & styles.TextVariants;
 
 export const Text = React.forwardRef(

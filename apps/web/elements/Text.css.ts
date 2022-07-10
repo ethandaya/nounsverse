@@ -49,7 +49,7 @@ const variant = {
     }),
     style({
       letterSpacing: "0.1em",
-      marginBottom: vars.space["1"],
+      marginBottom: vars.space["2"],
     }),
   ]),
 };
