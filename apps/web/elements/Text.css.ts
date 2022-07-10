@@ -5,7 +5,6 @@ import { atoms, vars } from "degen";
 const variant = {
   extraLarge: style([
     atoms({
-      color: "text",
       fontSize: "headingOne",
     }),
     style({
@@ -14,21 +13,26 @@ const variant = {
   ]),
   large: style([
     atoms({
-      color: "text",
       fontSize: "headingTwo",
     }),
     style({
       fontWeight: "700",
     }),
   ]),
+  medium: style([
+    atoms({
+      fontSize: "extraLarge",
+    }),
+    style({
+      fontWeight: "700",
+    }),
+  ]),
   base: atoms({
-    color: "text",
     fontSize: "base",
     fontWeight: "normal",
   }),
   small: style([
     atoms({
-      color: "text",
       fontSize: "small",
       fontWeight: "normal",
     }),
@@ -50,7 +54,10 @@ const variant = {
   ]),
 };
 
-export const TextCss = recipe({
+export const variants = recipe({
+  base: {
+    fontFamily: vars.fonts.mono,
+  },
   variants: {
     variant,
     ellipsis: {
@@ -67,4 +74,4 @@ export const TextCss = recipe({
   },
 });
 
-export type TextVariants = RecipeVariants<typeof TextCss>;
+export type TextVariants = RecipeVariants<typeof variants>;

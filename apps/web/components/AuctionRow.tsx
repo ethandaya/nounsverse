@@ -1,4 +1,4 @@
-import { Avatar, Box, Heading, IconEth } from "degen";
+import { Avatar, Box } from "degen";
 import { BidTable } from "./BidTable";
 import { Auction } from "../services/interfaces/noun.service";
 import { auctionHero } from "./AuctionRow.css";
@@ -23,9 +23,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
   const { ensName: ownerENSName, avatarURI: ownerAvatarURI } = useProfile(
     noun.owner.address
   );
-  const { ensName: bidderENSName, avatarURI: bidderAvatarURI } = useProfile(
-    noun.owner.address
-  );
+  const { ensName: bidderENSName } = useProfile(auction.bidder.address);
 
   return (
     <Box>
@@ -46,18 +44,15 @@ export function AuctionRow({ auction }: AuctionRowProps) {
             {auction.settled ? "Winning Bid" : "Current Bid"}
           </Text>
           <Text
-            variant="large"
-            display="flex"
-            alignItems="center"
+            variant={auction.settled ? "medium" : "large"}
             color={auction.settled ? "text" : "yellow"}
-            marginBottom="1"
           >
             ETH {toFixed(formatEther(auction.amount), 2)}
           </Text>
           <Text
-            textTransform="uppercase"
             color="textSecondary"
-            fontWeight="semiBold"
+            weight="medium"
+            transform={bidderENSName || ownerENSName ? "uppercase" : undefined}
           >
             {auction.settled
               ? ownerENSName || shortenAddress(noun.owner.address)
@@ -68,54 +63,48 @@ export function AuctionRow({ auction }: AuctionRowProps) {
           <Box>
             <Text variant="label">Holder</Text>
             <Box>
-              {bidderAvatarURI ? (
-                <Avatar
-                  label="Avatar"
-                  src={bidderAvatarURI}
-                  size="12"
-                  shape="square"
-                />
-              ) : (
-                <Box
-                  width="12"
-                  height="12"
-                  backgroundColor="yellow"
-                  borderRadius="2xLarge"
-                />
-              )}
-              <Heading>
-                {ownerENSName || shortenAddress(noun.owner.address)}
-              </Heading>
-
-              <a
-                rel="noreferrer"
-                href={getEtherscanLink(
-                  EtherscanPageType.TOKEN,
-                  NOUN_TOKEN_ADDRESS,
-                  `a=${noun.owner.address}`
+              <Box display="flex" alignItems="center">
+                {ownerAvatarURI ? (
+                  <Avatar
+                    label="Avatar"
+                    src={ownerAvatarURI}
+                    size="3"
+                    shape="square"
+                  />
+                ) : (
+                  <Box
+                    width="3"
+                    height="3"
+                    backgroundColor="yellow"
+                    borderRadius="medium"
+                  />
                 )}
-                target="_blank"
-              >
-                View on Etherscan
-              </a>
+                <Text variant="small">
+                  {ownerENSName || shortenAddress(noun.owner.address)}
+                </Text>
+              </Box>
+              <Text variant="small" color="textSecondary" transform="uppercase">
+                <a
+                  rel="noreferrer"
+                  href={getEtherscanLink(
+                    EtherscanPageType.TOKEN,
+                    NOUN_TOKEN_ADDRESS,
+                    `a=${noun.owner.address}`
+                  )}
+                  target="_blank"
+                >
+                  Etherscan
+                </a>
+              </Text>
             </Box>
           </Box>
         ) : (
           <Box>
             <Text variant="label">Time Remaining</Text>
-            <Text
-              variant="large"
-              display="flex"
-              alignItems="center"
-              marginBottom="1"
-            >
+            <Text variant="large" transform="uppercase">
               <CountdownDisplay to={auction.endTime} />
             </Text>
-            <Text
-              textTransform="uppercase"
-              color="textSecondary"
-              fontWeight="semiBold"
-            >
+            <Text transform="uppercase" color="textSecondary" weight="medium">
               Ends at {format(fromUnixTime(auction.endTime), "PP h:mm a")}
             </Text>
           </Box>
