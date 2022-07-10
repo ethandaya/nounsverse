@@ -1,6 +1,7 @@
 import { Bid } from "../services/interfaces/noun.service";
 import { BidRow } from "./BidRow";
-import { Box, Text } from "degen";
+import { Box } from "degen";
+import { Text } from "../elements/Text";
 
 type BidTableProps = {
   bids: Bid[];
@@ -12,7 +13,7 @@ const columns = [
   { col: "2fr", label: "Bidder" },
   { col: "1fr", label: "Bid" },
   { col: "1fr", label: "Eth Balance" },
-  { col: "1fr", label: "Prev Bids" },
+  { col: "1fr", label: "Prev. Bids" },
   { col: "1fr", label: "When" },
 ];
 
@@ -26,10 +27,10 @@ export function BidTable({ bids }: BidTableProps) {
         style={{
           gridTemplateColumns: columnTemplate,
         }}
-        marginBottom="5"
+        marginBottom="4"
       >
         {columns.map((col, idx) => (
-          <Text transform="uppercase" as="h6" variant="label" key={idx}>
+          <Text variant="label" key={idx}>
             {col.label}
           </Text>
         ))}

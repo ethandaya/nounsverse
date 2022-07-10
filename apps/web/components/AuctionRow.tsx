@@ -1,7 +1,7 @@
-import { Avatar, Box, Heading, Text } from "degen";
+import { Avatar, Box, Heading } from "degen";
 import { BidTable } from "./BidTable";
 import { Auction } from "../services/interfaces/noun.service";
-import { AuctionHero } from "./AuctionRow.css";
+import { auctionHero } from "./AuctionRow.css";
 import { toFixed } from "../utils/numbers";
 import { formatEther } from "ethers/lib/utils";
 import { useNoun } from "../hooks/useNoun";
@@ -9,8 +9,8 @@ import { useProfile } from "../hooks/useProfile";
 import { NOUN_TOKEN_ADDRESS, shortenAddress } from "../utils/address";
 import { CountdownDisplay } from "./CountdownDisplay";
 import { format, fromUnixTime } from "date-fns";
-import Link from "next/link";
 import { EtherscanPageType, getEtherscanLink } from "../utils/url";
+import { Text } from "../elements/Text";
 
 type AuctionRowProps = {
   auction: Auction;
@@ -29,12 +29,17 @@ export function AuctionRow({ auction }: AuctionRowProps) {
 
   return (
     <Box>
-      <Box display="grid" className={AuctionHero}>
+      <Box display="grid" className={auctionHero} paddingY="6">
         <Box>
           <Text variant="label">
             {format(fromUnixTime(auction.startTime), "MMMM dd, yy")}
           </Text>
-          <Heading>NOUN {auction.noun.id}</Heading>
+          <Text
+            variant="extraLarge"
+            color={auction.settled ? "text" : "yellow"}
+          >
+            NOUN {auction.noun.id}
+          </Text>
         </Box>
         <Box>
           <Text variant="label">
@@ -51,10 +56,10 @@ export function AuctionRow({ auction }: AuctionRowProps) {
           <Box>
             <Text variant="label">Holder</Text>
             <Box>
-              {ownerAvatarURI ? (
+              {bidderAvatarURI ? (
                 <Avatar
                   label="Avatar"
-                  src={ownerAvatarURI}
+                  src={bidderAvatarURI}
                   size="12"
                   shape="square"
                 />
@@ -62,7 +67,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
                 <Box
                   width="12"
                   height="12"
-                  backgroundColor="accent"
+                  backgroundColor="yellow"
                   borderRadius="2xLarge"
                 />
               )}
@@ -89,7 +94,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
             <Heading>
               <CountdownDisplay to={auction.endTime} />
             </Heading>
-            <Text variant="small" transform="uppercase">
+            <Text variant="small" textTransform="uppercase">
               Ends at {format(fromUnixTime(auction.endTime), "PP h:mm a")}
             </Text>
           </Box>
