@@ -25,7 +25,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
       refreshInterval: 5000,
     }),
   });
-  const { noun } = useNoun(auction.noun.id, {
+  const { noun, imageURL } = useNoun(auction.noun.id, {
     fallbackData: auction.noun,
   });
   const { ensName: ownerENSName, avatarURI: ownerAvatarURI } = useProfile(
@@ -45,6 +45,14 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
             alignItems="flex-start"
             justifyContent="flex-start"
           >
+            <Box
+              as="img"
+              width="7"
+              height="7"
+              src={imageURL}
+              alt={`Noun ${auction.noun.id}`}
+              marginRight="2.5"
+            />
             <Text
               variant="extraLarge"
               color={auction.settled ? "text" : "yellow"}

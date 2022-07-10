@@ -47,4 +47,5 @@ export interface NounService {
     offset: number
   ): Promise<Auction[]>;
   getBids(opts: GetBidOptions): Promise<Bid[]>;
+  getImageURL(nounId: string): Promise<string | undefined>;
 }

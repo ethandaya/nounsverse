@@ -6,12 +6,24 @@ import {
   NounService,
 } from "./interfaces/noun.service";
 import { gql, GraphQLClient } from "graphql-request";
+import { Agent } from "@zoralabs/nft-metadata";
+import { ALCHEMY_API_KEY } from "../utils/network";
+import { NOUN_TOKEN_ADDRESS } from "../utils/address";
 
 const NEXT_PUBLIC_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
 
 if (!NEXT_PUBLIC_SUBGRAPH_URL) {
   throw new Error("NEXT_PUBLIC_SUBGRAPH_URL is a required env var");
 }
+
+const agent = new Agent({
+  // Use ethers.js Networkish here: numbers (1/4) or strings (homestead/rinkeby) work here
+  network: "homestead",
+  // RPC url to access blockchain with. Optional: will fallback to using cloudflare eth
+  networkUrl: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+  // Timeout: defaults to 40 seconds, recommended timeout is 60 seconds (in milliseconds)
+  timeout: 40 * 1000,
+});
 
 const SubgraphClient = new GraphQLClient(NEXT_PUBLIC_SUBGRAPH_URL);
 
@@ -112,7 +124,7 @@ const GET_BIDS = gql`
   ${BID_FRAGMENT}
 `;
 
-class SubgraphService implements NounService {
+class SubgraphAndOnChainService implements NounService {
   constructor(private readonly client: GraphQLClient) {}
 
   public async getNoun(nounId: string): Promise<Noun> {
@@ -120,6 +132,23 @@ class SubgraphService implements NounService {
       nounId,
     });
     return resp.noun;
+  }
+
+  public async getImageURL(nounId: string): Promise<string | undefined> {
+    const resp = await agent.fetchMetadata(NOUN_TOKEN_ADDRESS, nounId);
+    // TODO - it works but ???
+    if (resp?.imageURL) {
+      const imageURL = resp.imageURL;
+      const encodedData = imageURL.slice(26);
+      const decodedData = Buffer.from(encodedData, "base64");
+      const transparentSvg = decodedData
+        .toString("utf8")
+        .replace('width="100%" height="100%"', 'width="0%" height="0%"');
+      return (
+        "data:image/svg+xml;base64," +
+        Buffer.from(transparentSvg).toString("base64")
+      );
+    }
   }
 
   public async getAuction(nounId: string): Promise<Auction> {
@@ -176,4 +205,4 @@ class SubgraphService implements NounService {
 }
 
 // TODO - lilnouns service
-export default new SubgraphService(SubgraphClient);
+export default new SubgraphAndOnChainService(SubgraphClient);

@@ -7,6 +7,9 @@ export function useNoun(nounId: string, opts?: SWRConfiguration) {
     (_, nounId) => subgraphService.getNoun(nounId),
     opts
   );
+  const { data: imageURL } = useSWR(["getNounImageURL", nounId], (_, nounId) =>
+    subgraphService.getImageURL(nounId)
+  );
 
-  return { noun: data, isLoading: !data, ...rest };
+  return { noun: data, imageURL, isLoading: !data, ...rest };
 }
