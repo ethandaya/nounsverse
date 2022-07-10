@@ -40,7 +40,8 @@ type Props = {
   marginTop?: BoxProps["marginTop"];
   marginLeft?: BoxProps["marginLeft"];
   marginRight?: BoxProps["marginRight"];
-} & styles.TextVariants;
+} & styles.TextVariants &
+  React.HTMLAttributes<HTMLDivElement>;
 
 export const Text = React.forwardRef(
   (

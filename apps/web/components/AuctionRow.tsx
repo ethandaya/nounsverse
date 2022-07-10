@@ -13,6 +13,7 @@ import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 import { Text } from "../elements/Text";
 import { useAuction } from "../hooks/useAuction";
 import { ArrowUpRight } from "react-feather";
+import Image from "next/image";
 
 type AuctionRowProps = {
   auction: Auction;
@@ -49,7 +50,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
               as="img"
               width="7"
               height="7"
-              src={imageURL}
+              src={imageURL || "../assets/loading-skull-noun.gif"}
               alt={`Noun ${auction.noun.id}`}
               marginRight="2.5"
             />
