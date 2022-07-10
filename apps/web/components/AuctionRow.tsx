@@ -13,14 +13,13 @@ import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 import { Text } from "../elements/Text";
 import { useAuction } from "../hooks/useAuction";
 import { ArrowUpRight } from "react-feather";
-import Image from "next/image";
 
 type AuctionRowProps = {
   auction: Auction;
 };
 
 export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
-  const { auction } = useAuction(initialAuction.noun.id, {
+  const { auction = initialAuction } = useAuction(initialAuction.noun.id, {
     fallbackData: initialAuction,
     ...(!initialAuction.settled && {
       refreshInterval: 5000,
@@ -38,7 +37,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
     <Box>
       <Box display="grid" className={auctionHero} paddingY="6" marginBottom="3">
         <Box>
-          <Text variant="label">
+          <Text variant="label" marginBottom="2">
             {format(fromUnixTime(auction.startTime), "MMMM dd, yy")}
           </Text>
           <Box
@@ -65,7 +64,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
           </Box>
         </Box>
         <Box>
-          <Text variant="label">
+          <Text variant="label" marginBottom="2">
             {auction.settled ? "Winning Bid" : "Current Bid"}
           </Text>
           <Text
@@ -87,7 +86,9 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
         </Box>
         {auction.settled ? (
           <Box>
-            <Text variant="label">Holder</Text>
+            <Text variant="label" marginBottom="2">
+              Holder
+            </Text>
             <Box>
               <Box display="flex" alignItems="center" marginBottom="1">
                 {ownerAvatarURI ? (
@@ -119,14 +120,16 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                   )}
                   target="_blank"
                 >
-                  Etherscan
+                  View on Etherscan
                 </a>
               </Text>
             </Box>
           </Box>
         ) : (
           <Box>
-            <Text variant="label">Time Remaining</Text>
+            <Text variant="label" marginBottom="2">
+              Time Remaining
+            </Text>
             <Text variant="large" transform="uppercase" marginBottom="1">
               <CountdownDisplay to={auction.endTime} />
             </Text>

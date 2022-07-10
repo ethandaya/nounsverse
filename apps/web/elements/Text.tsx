@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as styles from "./Text.css";
-import { Box, BoxProps } from "degen";
+import { Box, BoxProps, vars } from "degen";
 import clsx from "clsx";
 
 type Props = {
@@ -68,6 +68,7 @@ export const Text = React.forwardRef(
     return (
       <Box
         as={as}
+        ref={ref}
         className={clsx(
           styles.variants({
             variant,
@@ -81,7 +82,6 @@ export const Text = React.forwardRef(
         fontWeight={weight}
         letterSpacing={letterSpacing}
         lineHeight={lineHeight}
-        ref={ref}
         textAlign={align}
         textTransform={transform}
         whiteSpace={whiteSpace}

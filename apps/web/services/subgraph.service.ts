@@ -136,6 +136,7 @@ class SubgraphAndOnChainService implements NounService {
 
   public async getImageURL(nounId: string): Promise<string | undefined> {
     const resp = await agent.fetchMetadata(NOUN_TOKEN_ADDRESS, nounId);
+    console.log(resp);
     // TODO - it works but ???
     if (resp?.imageURL) {
       const imageURL = resp.imageURL;

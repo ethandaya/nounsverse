@@ -1,8 +1,9 @@
 import { Bid } from "../services/interfaces/noun.service";
 import { BidRow } from "./BidRow";
-import { Box } from "degen";
+import { Box, vars } from "degen";
 import { Text } from "../elements/Text";
 import { useState } from "react";
+import { ChevronDown, ChevronUp } from "react-feather";
 
 type BidTableProps = {
   bids: Bid[];
@@ -21,9 +22,9 @@ const columns = [
 export const columnTemplate = columns.map((c) => c.col).join(" ");
 
 export function BidTable({ bids }: BidTableProps) {
-  const [showMore, setShowMore] = useState<boolean>(false);
+  const [showMoreBids, setShowMoreBids] = useState<boolean>(false);
   return (
-    <Box>
+    <Box marginBottom="6">
       <Box
         display="grid"
         style={{
@@ -39,14 +40,27 @@ export function BidTable({ bids }: BidTableProps) {
       </Box>
       {bids
         .sort((a, b) => b.blockTimestamp - a.blockTimestamp)
-        .slice(0, showMore ? bids.length : 7)
+        .slice(0, showMoreBids ? bids.length : 7)
         .map((bid, idx) => (
           <BidRow key={idx} bid={bid} />
         ))}
       {bids.length > 7 && (
-        <Text onClick={() => setShowMore(!showMore)} variant="label">
-          {showMore ? "Collapse" : "View More"}
-        </Text>
+        <Box
+          width="auto"
+          display="flex"
+          alignItems="center"
+          cursor="pointer"
+          onClick={() => setShowMoreBids(!showMoreBids)}
+        >
+          <Text variant="label" marginRight="0.5">
+            {showMoreBids ? "Collapse" : "View More Bids"}
+          </Text>
+          {showMoreBids ? (
+            <ChevronUp color={vars.colors.textTertiary} size={16} />
+          ) : (
+            <ChevronDown color={vars.colors.textTertiary} size={16} />
+          )}
+        </Box>
       )}
     </Box>
   );
