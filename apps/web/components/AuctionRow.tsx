@@ -1,4 +1,4 @@
-import { Avatar, Box } from "degen";
+import { Avatar, Box, vars } from "degen";
 import { BidTable } from "./BidTable";
 import { Auction } from "../services/interfaces/noun.service";
 import { auctionHero } from "./AuctionRow.css";
@@ -12,6 +12,7 @@ import { format, fromUnixTime } from "date-fns";
 import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 import { Text } from "../elements/Text";
 import { useAuction } from "../hooks/useAuction";
+import { ArrowUpRight } from "react-feather";
 
 type AuctionRowProps = {
   auction: Auction;
@@ -39,13 +40,20 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
           <Text variant="label">
             {format(fromUnixTime(auction.startTime), "MMMM dd, yy")}
           </Text>
-          <Text
-            variant="extraLarge"
-            color={auction.settled ? "text" : "yellow"}
-            lineHeight="none"
+          <Box
+            display="flex"
+            alignItems="flex-start"
+            justifyContent="flex-start"
           >
-            NOUN {auction.noun.id}
-          </Text>
+            <Text
+              variant="extraLarge"
+              color={auction.settled ? "text" : "yellow"}
+              lineHeight="none"
+            >
+              NOUN {auction.noun.id}
+            </Text>
+            <ArrowUpRight color={vars.colors.yellow} size={24} />
+          </Box>
         </Box>
         <Box>
           <Text variant="label">

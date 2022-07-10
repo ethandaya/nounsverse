@@ -1,6 +1,6 @@
 import { Bid } from "../services/interfaces/noun.service";
 import { columnTemplate } from "./BidTable";
-import { Avatar, Box } from "degen";
+import { Avatar, Box, vars } from "degen";
 import { shortenAddress, shortenTx } from "../utils/address";
 import { formatEther } from "ethers/lib/utils";
 import { mul, sum, toFixed } from "../utils/numbers";
@@ -12,6 +12,7 @@ import { useEthPrice } from "../hooks/useEthPrice";
 import { blockNumberCol } from "./BidRow.css";
 import { Text } from "../elements/Text";
 import { formatAgo } from "../utils/dates";
+import { ArrowUpRight } from "react-feather";
 
 type BidRowProps = {
   bid: Bid;
@@ -95,10 +96,16 @@ export function BidRow({ bid }: BidRowProps) {
           ETH {sum(bids?.map((b: Bid) => formatEther(b.amount))).toFixed(2)}
         </Text>
       </Box>
-      <Box>
-        <Text font="mono" transform="uppercase">
-          {formatAgo(formatDistanceToNow(fromUnixTime(bid.blockTimestamp)))}
-        </Text>
+      <Box display="flex" justifyContent="space-between">
+        <Box>
+          <Text font="mono" transform="uppercase" marginBottom="1">
+            {formatAgo(formatDistanceToNow(fromUnixTime(bid.blockTimestamp)))}
+          </Text>
+          <Text font="mono" variant="small" color="textSecondary">
+            {bid.blockTimestamp}
+          </Text>
+        </Box>
+        <ArrowUpRight color={vars.colors.yellow} size={20} />
       </Box>
     </Box>
   );
