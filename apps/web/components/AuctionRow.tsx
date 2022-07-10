@@ -11,12 +11,19 @@ import { CountdownDisplay } from "./CountdownDisplay";
 import { format, fromUnixTime } from "date-fns";
 import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 import { Text } from "../elements/Text";
+import { useAuction } from "../hooks/useAuction";
 
 type AuctionRowProps = {
   auction: Auction;
 };
 
-export function AuctionRow({ auction }: AuctionRowProps) {
+export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
+  const { auction } = useAuction(initialAuction.noun.id, {
+    fallbackData: initialAuction,
+    ...(!initialAuction.settled && {
+      refreshInterval: 5000,
+    }),
+  });
   const { noun } = useNoun(auction.noun.id, {
     fallbackData: auction.noun,
   });
@@ -27,7 +34,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
 
   return (
     <Box>
-      <Box display="grid" className={auctionHero} paddingY="6">
+      <Box display="grid" className={auctionHero} paddingY="6" marginBottom="3">
         <Box>
           <Text variant="label">
             {format(fromUnixTime(auction.startTime), "MMMM dd, yy")}
@@ -65,7 +72,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
           <Box>
             <Text variant="label">Holder</Text>
             <Box>
-              <Box display="flex" alignItems="center">
+              <Box display="flex" alignItems="center" marginBottom="1">
                 {ownerAvatarURI ? (
                   <Avatar
                     label="Avatar"
@@ -81,7 +88,7 @@ export function AuctionRow({ auction }: AuctionRowProps) {
                     borderRadius="medium"
                   />
                 )}
-                <Text variant="small">
+                <Text variant="medium" marginLeft="2.5">
                   {ownerENSName || shortenAddress(noun.owner.address)}
                 </Text>
               </Box>

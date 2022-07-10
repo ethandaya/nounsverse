@@ -1,16 +1,17 @@
 import { Bid } from "../services/interfaces/noun.service";
 import { columnTemplate } from "./BidTable";
-import { Avatar, Box, Text } from "degen";
+import { Avatar, Box } from "degen";
 import { shortenAddress, shortenTx } from "../utils/address";
 import { formatEther } from "ethers/lib/utils";
-import { mul, toFixed } from "../utils/numbers";
+import { mul, sum, toFixed } from "../utils/numbers";
 import { useBidsForAddress } from "../hooks/useBidsForAddress";
 import formatDistanceToNow from "date-fns/formatDistanceToNowStrict";
 import fromUnixTime from "date-fns/fromUnixTime";
 import { useProfile } from "../hooks/useProfile";
 import { useEthPrice } from "../hooks/useEthPrice";
-import * as styles from "./BidTable.module.css";
 import { blockNumberCol } from "./BidRow.css";
+import { Text } from "../elements/Text";
+import { formatAgo } from "../utils/dates";
 
 type BidRowProps = {
   bid: Bid;
@@ -35,12 +36,14 @@ export function BidRow({ bid }: BidRowProps) {
       }}
       marginBottom="5"
     >
+      <Text variant="small" color="textSecondary" className={blockNumberCol}>
+        {bid.blockNumber}
+      </Text>
       <Box>
-        <Box className={blockNumberCol}>{bid.blockNumber}</Box>
-      </Box>
-      <Box>
-        <Text font="mono">{shortenTx(bid.id)}</Text>
-        <Text font="mono" variant="label">
+        <Text font="mono" marginBottom="1">
+          {shortenTx(bid.id)}
+        </Text>
+        <Text variant="small" font="mono" color="textSecondary">
           {bid.blockIndex}
         </Text>
       </Box>
@@ -56,36 +59,45 @@ export function BidRow({ bid }: BidRowProps) {
           />
         )}
         <Box display="flex" flexDirection="column" marginLeft="2.5">
-          <Text font="mono" transform={ensName ? "uppercase" : undefined}>
+          <Text
+            font="mono"
+            transform={ensName ? "uppercase" : undefined}
+            marginBottom="1"
+          >
             {ensName || shortenAddress(bid.bidder.address)}
           </Text>
-          <Text color="textSecondary">{bid.bidder.tokenBalanceRaw} Nouns</Text>
+          <Text variant="small" color="textSecondary">
+            {bid.bidder.tokenBalanceRaw} Nouns
+          </Text>
         </Box>
       </Box>
       <Box display="flex" flexDirection="column">
-        <Text font="mono" transform="uppercase">
+        <Text font="mono" transform="uppercase" marginBottom="1">
           ETH {formatEther(bid.amount)}
         </Text>
-        <Text font="mono" transform="uppercase" color="textSecondary">
+        <Text font="mono" variant="small" color="textSecondary">
           ${rate ? mul(rate, formatEther(bid.amount)).toFixed(2) : ""}
         </Text>
       </Box>
       <Box display="flex" flexDirection="column">
-        <Text font="mono" transform="uppercase">
+        <Text font="mono" transform="uppercase" marginBottom="1">
           ETH {balance ? toFixed(formatEther(balance), 2) : ""}
         </Text>
-        <Text font="mono" transform="uppercase" color="textSecondary">
+        <Text font="mono" variant="small" color="textSecondary">
           ${rate && balance ? mul(rate, formatEther(balance)).toFixed(2) : ""}
         </Text>
       </Box>
       <Box>
-        <Text font="mono" transform="uppercase">
+        <Text font="mono" marginBottom="1">
           {bids?.length}
+        </Text>
+        <Text font="mono" variant="small" color="textSecondary">
+          ETH {sum(bids?.map((b: Bid) => formatEther(b.amount))).toFixed(2)}
         </Text>
       </Box>
       <Box>
         <Text font="mono" transform="uppercase">
-          {formatDistanceToNow(fromUnixTime(bid.blockTimestamp))} AGO
+          {formatAgo(formatDistanceToNow(fromUnixTime(bid.blockTimestamp)))}
         </Text>
       </Box>
     </Box>

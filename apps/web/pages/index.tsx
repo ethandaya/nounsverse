@@ -45,7 +45,7 @@ const Home: NextPage = () => {
   const isRefreshing = isValidating && data && data.length === size;
 
   return (
-    <Box padding="5" backgroundColor="background">
+    <Box paddingX="4" paddingY="5" backgroundColor="background">
       {data.map((auctions) =>
         auctions.map((auction) => (
           <AuctionRow key={auction.noun.id} auction={auction} />

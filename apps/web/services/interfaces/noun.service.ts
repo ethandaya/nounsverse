@@ -30,6 +30,7 @@ export type Auction = {
 export type GetBidOptions = {
   address?: string;
   blockNumber?: number | string;
+  offset?: number;
 };
 
 /*

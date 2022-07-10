@@ -27,7 +27,7 @@ export function BidTable({ bids }: BidTableProps) {
         style={{
           gridTemplateColumns: columnTemplate,
         }}
-        marginBottom="4"
+        marginBottom="2"
       >
         {columns.map((col, idx) => (
           <Text variant="label" key={idx}>

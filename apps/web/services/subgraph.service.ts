@@ -100,8 +100,12 @@ const GET_AUCTIONS_BY_ID = gql`
 `;
 
 const GET_BIDS = gql`
-  query GetBids($address: String, $blockNumber: Int) {
-    bids(where: { bidder: $address }, block: { number: $blockNumber }) {
+  query GetBids($address: String, $blockNumber: Int, $offset: Int!) {
+    bids(
+      where: { bidder: $address }
+      block: { number: $blockNumber }
+      skip: $offset
+    ) {
       ...BidFragment
     }
   }
@@ -141,9 +145,11 @@ class SubgraphService implements NounService {
   public async getBids({
     address,
     blockNumber,
+    offset = 0,
   }: GetBidOptions): Promise<Bid[]> {
     const resp = await this.client.request(GET_BIDS, {
       address,
+      offset,
       ...(blockNumber && {
         blockNumber:
           typeof blockNumber === "string"
@@ -151,7 +157,21 @@ class SubgraphService implements NounService {
             : blockNumber,
       }),
     });
-    return resp.bids;
+
+    const bids = resp.bids;
+
+    // If bids page is max length recurse to get more bids
+    // TODO - cache better because shoutout POAP.ETH
+    if (bids.length >= 100) {
+      const nextBids = await this.getBids({
+        address,
+        blockNumber,
+        offset: bids.length,
+      });
+      bids.push(...nextBids);
+    }
+
+    return bids;
   }
 }
 

@@ -1,8 +1,10 @@
 import * as React from "react";
 import * as styles from "./Text.css";
 import { Box, BoxProps } from "degen";
+import clsx from "clsx";
 
 type Props = {
+  className?: string;
   align?: BoxProps["textAlign"];
   as?:
     | "code"
@@ -36,6 +38,8 @@ type Props = {
   margin?: BoxProps["margin"];
   marginBottom?: BoxProps["marginBottom"];
   marginTop?: BoxProps["marginTop"];
+  marginLeft?: BoxProps["marginLeft"];
+  marginRight?: BoxProps["marginRight"];
 } & styles.TextVariants;
 
 export const Text = React.forwardRef(
@@ -55,6 +59,7 @@ export const Text = React.forwardRef(
       weight,
       whiteSpace,
       wordBreak,
+      className = "",
       ...rest
     }: Props,
     ref: React.Ref<HTMLElement>
@@ -62,10 +67,13 @@ export const Text = React.forwardRef(
     return (
       <Box
         as={as}
-        className={styles.variants({
-          variant,
-          ellipsis: ellipsis ? true : undefined,
-        })}
+        className={clsx(
+          styles.variants({
+            variant,
+            ellipsis: ellipsis ? true : undefined,
+          }),
+          className
+        )}
         color={color}
         fontFamily={font}
         fontSize={size}
