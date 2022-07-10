@@ -1,4 +1,4 @@
-import { Avatar, Box, Heading } from "degen";
+import { Avatar, Box, Heading, IconEth } from "degen";
 import { BidTable } from "./BidTable";
 import { Auction } from "../services/interfaces/noun.service";
 import { auctionHero } from "./AuctionRow.css";
@@ -45,8 +45,20 @@ export function AuctionRow({ auction }: AuctionRowProps) {
           <Text variant="label">
             {auction.settled ? "Winning Bid" : "Current Bid"}
           </Text>
-          <Heading>{toFixed(formatEther(auction.amount), 2)}</Heading>
-          <Text>
+          <Text
+            variant="large"
+            display="flex"
+            alignItems="center"
+            color={auction.settled ? "text" : "yellow"}
+            marginBottom="1"
+          >
+            ETH {toFixed(formatEther(auction.amount), 2)}
+          </Text>
+          <Text
+            textTransform="uppercase"
+            color="textSecondary"
+            fontWeight="semiBold"
+          >
             {auction.settled
               ? ownerENSName || shortenAddress(noun.owner.address)
               : bidderENSName || shortenAddress(auction.bidder.address)}
@@ -91,10 +103,19 @@ export function AuctionRow({ auction }: AuctionRowProps) {
         ) : (
           <Box>
             <Text variant="label">Time Remaining</Text>
-            <Heading>
+            <Text
+              variant="large"
+              display="flex"
+              alignItems="center"
+              marginBottom="1"
+            >
               <CountdownDisplay to={auction.endTime} />
-            </Heading>
-            <Text variant="small" textTransform="uppercase">
+            </Text>
+            <Text
+              textTransform="uppercase"
+              color="textSecondary"
+              fontWeight="semiBold"
+            >
               Ends at {format(fromUnixTime(auction.endTime), "PP h:mm a")}
             </Text>
           </Box>

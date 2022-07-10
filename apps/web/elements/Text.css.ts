@@ -15,11 +15,10 @@ const variant = {
   large: style([
     atoms({
       color: "text",
-      fontSize: "large",
-      fontWeight: "normal",
+      fontSize: "headingTwo",
     }),
     style({
-      lineHeight: "2rem",
+      fontWeight: "700",
     }),
   ]),
   base: atoms({
