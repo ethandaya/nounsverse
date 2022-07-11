@@ -8,24 +8,13 @@ import {
 import { gql, GraphQLClient } from "graphql-request";
 import { Agent } from "@zoralabs/nft-metadata";
 import { ALCHEMY_API_KEY } from "../utils/network";
-import { NOUN_TOKEN_ADDRESS } from "../utils/address";
-
-const NEXT_PUBLIC_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
-
-if (!NEXT_PUBLIC_SUBGRAPH_URL) {
-  throw new Error("NEXT_PUBLIC_SUBGRAPH_URL is a required env var");
-}
+import { LIL_NOUN_TOKEN_ADDRESS } from "../utils/address";
 
 const agent = new Agent({
-  // Use ethers.js Networkish here: numbers (1/4) or strings (homestead/rinkeby) work here
   network: "homestead",
-  // RPC url to access blockchain with. Optional: will fallback to using cloudflare eth
   networkUrl: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
-  // Timeout: defaults to 40 seconds, recommended timeout is 60 seconds (in milliseconds)
   timeout: 40 * 1000,
 });
-
-const SubgraphClient = new GraphQLClient(NEXT_PUBLIC_SUBGRAPH_URL);
 
 const ACCOUNT_FRAGMENT = gql`
   fragment AccountFragment on Account {
@@ -124,8 +113,11 @@ const GET_BIDS = gql`
   ${BID_FRAGMENT}
 `;
 
-class SubgraphAndOnChainService implements NounService {
-  constructor(private readonly client: GraphQLClient) {}
+export class SubgraphService implements NounService {
+  constructor(
+    private readonly address: string,
+    private readonly client: GraphQLClient
+  ) {}
 
   public async getNoun(nounId: string): Promise<Noun> {
     const resp = await this.client.request(GET_NOUN_BY_ID, {
@@ -135,8 +127,7 @@ class SubgraphAndOnChainService implements NounService {
   }
 
   public async getImageURL(nounId: string): Promise<string | undefined> {
-    const resp = await agent.fetchMetadata(NOUN_TOKEN_ADDRESS, nounId);
-    console.log(resp);
+    const resp = await agent.fetchMetadata(this.address, nounId);
     // TODO - it works but ???
     if (resp?.imageURL) {
       const imageURL = resp.imageURL;
@@ -172,11 +163,10 @@ class SubgraphAndOnChainService implements NounService {
     return resp.auctions;
   }
 
-  public async getBids({
-    address,
-    blockNumber,
-    offset = 0,
-  }: GetBidOptions): Promise<Bid[]> {
+  public async getBids(
+    { address, blockNumber, offset = 0 }: GetBidOptions,
+    bids: Bid[] = []
+  ): Promise<Bid[]> {
     const resp = await this.client.request(GET_BIDS, {
       address,
       offset,
@@ -188,22 +178,14 @@ class SubgraphAndOnChainService implements NounService {
       }),
     });
 
-    const bids = resp.bids;
+    bids = [...bids, ...resp.bids];
 
     // If bids page is max length recurse to get more bids
     // TODO - cache better because shoutout POAP.ETH
-    if (bids.length >= 100) {
-      const nextBids = await this.getBids({
-        address,
-        blockNumber,
-        offset: bids.length,
-      });
-      bids.push(...nextBids);
+    if (resp.bids.length !== 100) {
+      return bids;
+    } else {
+      return this.getBids({ address, blockNumber, offset: offset + 100 }, bids);
     }
-
-    return bids;
   }
 }
-
-// TODO - lilnouns service
-export default new SubgraphAndOnChainService(SubgraphClient);

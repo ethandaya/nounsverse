@@ -6,13 +6,16 @@ import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
 import { chains, wagmiClient } from "../utils/network";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { ServiceCtxProvider } from "../services/ServiceContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <ThemeProvider defaultMode="dark">
-          <Component {...pageProps} />
+          <ServiceCtxProvider>
+            <Component {...pageProps} />
+          </ServiceCtxProvider>
         </ThemeProvider>
       </RainbowKitProvider>
     </WagmiConfig>

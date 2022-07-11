@@ -1,29 +1,37 @@
 import type { NextPage } from "next";
 import useSWRInfinite from "swr/infinite";
 import { Auction } from "../services/interfaces/noun.service";
-import subgraphService from "../services/subgraph.service";
 import { AuctionRow } from "../components/AuctionRow";
 import { useInView } from "react-intersection-observer";
-import React from "react";
-import { Box, Text } from "degen";
+import React, { useCallback, useContext } from "react";
+import { Box, Button, Text } from "degen";
+import { useNounService } from "../hooks/useNounService";
+import { ServiceContext } from "../services/ServiceContext";
+import { LIL_NOUN_TOKEN_ADDRESS, NOUN_TOKEN_ADDRESS } from "../utils/address";
 
 const PAGE_SIZE = 3;
 
-const getKey = (
-  pageIndex: number,
-  previousPageData: Auction[]
-): [string, number, number] | null => {
-  if (previousPageData && !previousPageData.length) return null;
-  return ["DESC", PAGE_SIZE, pageIndex * PAGE_SIZE];
-};
-
 // TODO - add get static first page of auctions
 const Home: NextPage = () => {
+  const service = useNounService();
+  const { address, setAddress } = useContext(ServiceContext);
+
+  const getKey = useCallback(
+    (
+      pageIndex: number,
+      previousPageData: Auction[]
+    ): [string, string, number, number] | null => {
+      if (previousPageData && !previousPageData.length) return null;
+      return [address, "DESC", PAGE_SIZE, pageIndex * PAGE_SIZE];
+    },
+    [address]
+  );
+
   const { data, error, size, setSize, isValidating } = useSWRInfinite<
     Auction[]
   >(getKey, {
-    fetcher: (...args: ["DESC" | "ASC", number, number]) =>
-      subgraphService.getAuctions(...args),
+    fetcher: (_, ...args: ["DESC" | "ASC", number, number]) =>
+      service.getAuctions(...args),
   });
 
   const { ref } = useInView({
@@ -41,11 +49,18 @@ const Home: NextPage = () => {
     isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
   const isRefreshing = isValidating && data && data.length === size;
 
+  console.log(isLoadingInitialData);
+
   return (
     <Box paddingX="4" paddingY="5" backgroundColor="background">
+      <Button onClick={() => setAddress(NOUN_TOKEN_ADDRESS)}>NOUNS</Button>
+      <Button onClick={() => setAddress(LIL_NOUN_TOKEN_ADDRESS)}>
+        LIL NOUNS
+      </Button>
+      <Text>{isLoadingInitialData && "LOADING..."}</Text>
       {data?.map((auctions) =>
         auctions.map((auction) => (
-          <AuctionRow key={auction.noun.id} auction={auction} />
+          <AuctionRow key={`${address}-${auction.noun.id}`} auction={auction} />
         ))
       )}
       {!isRefreshing && !isLoadingInitialData && !isReachingEnd && (

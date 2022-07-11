@@ -1,14 +1,15 @@
 import useSWR, { SWRConfiguration } from "swr";
-import subgraphService from "../services/subgraph.service";
 import { GetBidOptions } from "../services/interfaces/noun.service";
+import { useNounService } from "./useNounService";
 
 export function useBidsForAddress(
   options: GetBidOptions,
   opts?: SWRConfiguration
 ) {
+  const service = useNounService();
   const { data, ...rest } = useSWR(
     ["getBidsForAddress", options],
-    (_, options) => subgraphService.getBids(options),
+    (_, options) => service.getBids(options),
     opts
   );
 

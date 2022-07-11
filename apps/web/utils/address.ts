@@ -1,6 +1,15 @@
 import { getAddress } from "@ethersproject/address";
 
-export const NOUN_TOKEN_ADDRESS = "0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03";
+export const NOUN_TOKEN_ADDRESS = process.env
+  .NEXT_PUBLIC_NOUNS_ADDRESS as string;
+if (!NOUN_TOKEN_ADDRESS) {
+  throw new Error("NEXT_PUBLIC_NOUNS_ADDRESS is a required env var");
+}
+export const LIL_NOUN_TOKEN_ADDRESS = process.env
+  .NEXT_PUBLIC_LIL_NOUNS_ADDRESS as string;
+if (!LIL_NOUN_TOKEN_ADDRESS) {
+  throw new Error("NEXT_PUBLIC_LIL_NOUNS_ADDRESS is a required env var");
+}
 
 function shortenString(str: string, length: number = 4) {
   return (

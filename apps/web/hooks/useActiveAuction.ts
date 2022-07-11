@@ -1,9 +1,10 @@
 import useSWR from "swr";
-import subgraphService from "../services/subgraph.service";
+import { useNounService } from "./useNounService";
 
 export function useActiveAuction() {
+  const service = useNounService();
   const { data, ...rest } = useSWR(["getActiveAuction"], () =>
-    subgraphService.getAuctions("DESC", 1, 0).then((res) => res[0])
+    service.getAuctions("DESC", 1, 0).then((res) => res[0])
   );
 
   return { auction: data, isLoading: !data, ...rest };
