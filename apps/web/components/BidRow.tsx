@@ -72,7 +72,7 @@ export function BidRow({ bid }: BidRowProps) {
       </Box>
       <Box className={BidRowColContainer}>
         <Text font="mono" transform="uppercase">
-          ETH {formatEther(bid.amount)}
+          ETH {toFixed(formatEther(bid.amount), 2)}
         </Text>
         <Skeleton loading={!rate} width="6" height="2" radius="medium">
           <Text font="mono" variant="small" color="textSecondary">

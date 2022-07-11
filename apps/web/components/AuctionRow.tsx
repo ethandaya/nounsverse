@@ -65,7 +65,11 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
         </Box>
         <Box>
           <Text variant="label" marginBottom="2">
-            {auction.settled ? "Winning Bid" : "Current Bid"}
+            {auction.settled
+              ? "Winning Bid"
+              : auction.bidder
+              ? "Current Bid"
+              : "Reserve Not met"}
           </Text>
           <Text
             variant={auction.settled ? "medium" : "large"}
@@ -83,7 +87,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
               ? ownerENSName || shortenAddress(noun.owner.address)
               : auction?.bidder
               ? bidderENSName || shortenAddress(auction.bidder.address)
-              : "No Bid"}
+              : "NO BIDS YET"}
           </Text>
         </Box>
         {auction.settled ? (

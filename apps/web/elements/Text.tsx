@@ -41,6 +41,7 @@ type Props = {
   marginLeft?: BoxProps["marginLeft"];
   marginRight?: BoxProps["marginRight"];
   minHeight?: BoxProps["minHeight"];
+  cursor?: BoxProps["cursor"];
 } & styles.TextVariants &
   React.HTMLAttributes<HTMLDivElement>;
 
