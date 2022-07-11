@@ -25,7 +25,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
   const { auction = initialAuction } = useAuction(initialAuction.noun.id, {
     fallbackData: initialAuction,
     ...(!initialAuction.settled && {
-      refreshInterval: 5000,
+      refreshInterval: 1000 * 30,
     }),
   });
 

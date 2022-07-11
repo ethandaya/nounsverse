@@ -10,10 +10,13 @@ import { Text } from "../elements/Text";
 import { useServiceContext } from "../hooks/useServiceContext";
 import { ContractSwitcher } from "../compositions/ContractSwitcher";
 import { Banner } from "../components/Banner";
+import Head from "next/head";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../utils/seo";
 
 const PAGE_SIZE = 3;
 
 // TODO - add get static first page of auctions
+// TODO - route the address for each dao — maybe next multitenant config
 const Home: NextPage = () => {
   const service = useNounService();
   const { address } = useServiceContext();
@@ -54,6 +57,32 @@ const Home: NextPage = () => {
 
   return (
     <Box paddingX="3" paddingY="6">
+      <Head>
+        <title>{SITE_TITLE}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content={SITE_DESCRIPTION} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={SITE_TITLE} key="title" />
+        <meta
+          name="og:description"
+          property="og:description"
+          content={SITE_DESCRIPTION}
+        />
+        <meta property="og:site_name" content={SITE_TITLE} />
+        <meta property="og:url" content={SITE_URL} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={SITE_TITLE} />
+        <meta name="twitter:description" content={SITE_DESCRIPTION} />
+        <meta name="twitter:site" content={SITE_URL} />
+        <meta name="twitter:creator" content="@ethandaya" />
+
+        <link rel="icon" type="image/png" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
+
+        <meta property="og:image" content="/ogImage.jpg" />
+        <meta name="twitter:image" content="/ogImage.jpg" />
+      </Head>
       <ContractSwitcher isWorking={isLoadingInitialData || isRefreshing} />
       {data?.map((auctions) =>
         auctions.map((auction) => (

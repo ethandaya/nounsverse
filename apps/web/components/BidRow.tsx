@@ -19,6 +19,7 @@ type BidRowProps = {
   bid: Bid;
 };
 
+// TODO - add motion to animate in render
 export function BidRow({ bid }: BidRowProps) {
   const { rate } = useEthPrice(bid.blockNumber);
   const { ensName, avatarURI, balance } = useProfile(
