@@ -39,7 +39,7 @@ const Home: NextPage = () => {
 
   const { ref } = useInView({
     threshold: 0.15,
-    delay: 150,
+    delay: 100,
     onChange: (inView: boolean) => inView && !isValidating && setSize(size + 1),
   });
 
@@ -54,7 +54,6 @@ const Home: NextPage = () => {
 
   return (
     <Box paddingX="3" paddingY="6">
-      <Banner />
       <ContractSwitcher isWorking={isLoadingInitialData || isRefreshing} />
       {data?.map((auctions) =>
         auctions.map((auction) => (
@@ -65,9 +64,13 @@ const Home: NextPage = () => {
         <Box ref={ref} as="div" display="flex" width="full" height="10" />
       )}
       {!isLoadingInitialData && isLoadingMore && (
-        <Text variant="label">Loading...</Text>
+        <Box position="fixed" bottom="6" left="0" right="0">
+          <Text variant="label" paddingX="3">
+            Loading...
+          </Text>
+        </Box>
       )}
-      {isRefreshing && <Text variant="label">Refreshing...</Text>}
+      <Banner />
     </Box>
   );
 };
