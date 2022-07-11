@@ -31,7 +31,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
   const { ensName: ownerENSName, avatarURI: ownerAvatarURI } = useProfile(
     noun.owner.address
   );
-  const { ensName: bidderENSName } = useProfile(auction.bidder.address);
+  const { ensName: bidderENSName } = useProfile(auction.bidder?.address);
 
   return (
     <Box>
@@ -81,7 +81,9 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
           >
             {auction.settled
               ? ownerENSName || shortenAddress(noun.owner.address)
-              : bidderENSName || shortenAddress(auction.bidder.address)}
+              : auction?.bidder
+              ? bidderENSName || shortenAddress(auction.bidder.address)
+              : "No Bid"}
           </Text>
         </Box>
         {auction.settled ? (

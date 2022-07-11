@@ -25,3 +25,11 @@ export function shortenAddress(_address: string, length: number = 4) {
 export function shortenTx(txHash: string, length: number = 4) {
   return shortenString(txHash, length);
 }
+
+export function isAddressMatch(addressA: string, addressB: string) {
+  try {
+    return getAddress(addressA) === getAddress(addressB);
+  } catch (e) {
+    return;
+  }
+}

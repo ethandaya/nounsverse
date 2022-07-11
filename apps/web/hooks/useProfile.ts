@@ -1,7 +1,7 @@
 import { useEnsAvatar, useEnsName } from "wagmi";
 import { useBalanceExtended } from "./useBalanceAtBlock";
 
-export function useProfile(address: string, blockNumber?: string | number) {
+export function useProfile(address?: string, blockNumber?: string | number) {
   const { data: ensName } = useEnsName({ address });
   const { data: avatarURI } = useEnsAvatar({
     addressOrName: address,

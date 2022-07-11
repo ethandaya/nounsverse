@@ -1,15 +1,20 @@
-import { useActiveAuction } from "../hooks/useActiveAuction";
+import { Box } from "degen";
+import { Text } from "../elements/Text";
 
 export function Header() {
-  const { auction } = useActiveAuction();
-
   return (
-    <header>
-      <h3>Nouns</h3>
-      <h5>Live Auction </h5>
-      <h5>{auction?.noun.id}</h5>
-      <h5>Bids: {auction?.bids.length}</h5>
-      <h5>Ends In: {auction?.endTime}</h5>
-    </header>
+    <Box
+      as="header"
+      paddingY="2"
+      marginBottom="4"
+      borderBottomWidth="0.5"
+      borderColor="white"
+    >
+      <Box paddingX="4" display="flex" justifyContent="flex-start">
+        <Text variant="base" transform="uppercase" weight="bold">
+          Nounsverse.wtf
+        </Text>
+      </Box>
+    </Box>
   );
 }

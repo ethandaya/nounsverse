@@ -24,7 +24,7 @@ export type Auction = {
   endTime: number;
   noun: Noun;
   bids: Bid[];
-  bidder: Account;
+  bidder?: Account;
 };
 
 export type GetBidOptions = {

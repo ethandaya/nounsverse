@@ -7,6 +7,7 @@ body {
   font-size: 16px;
   font-family: var(--fonts-mono);
   background: var(--colors-black);
+  color: var(--colors-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: auto;
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as styles from "./Text.css";
-import { Box, BoxProps, vars } from "degen";
+import { Box, BoxProps } from "degen";
 import clsx from "clsx";
 
 type Props = {
