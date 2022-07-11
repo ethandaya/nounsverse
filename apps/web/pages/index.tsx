@@ -9,7 +9,7 @@ import { useNounService } from "../hooks/useNounService";
 import { Text } from "../elements/Text";
 import { useServiceContext } from "../hooks/useServiceContext";
 import { ContractSwitcher } from "../compositions/ContractSwitcher";
-import { columnTemplate } from "../components/BidTable";
+import { Banner } from "../components/Banner";
 
 const PAGE_SIZE = 3;
 
@@ -54,6 +54,7 @@ const Home: NextPage = () => {
 
   return (
     <Box paddingX="3" paddingY="6">
+      <Banner />
       <ContractSwitcher isWorking={isLoadingInitialData || isRefreshing} />
       {data?.map((auctions) =>
         auctions.map((auction) => (
