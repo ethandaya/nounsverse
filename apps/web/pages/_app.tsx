@@ -1,6 +1,6 @@
 import "degen/styles";
 import "../styles/index.css";
-import "../styles/theme.css";
+import "../styles/theme.scss";
 import { ThemeProvider } from "degen";
 import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";

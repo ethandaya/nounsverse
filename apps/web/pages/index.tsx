@@ -17,14 +17,11 @@ const getKey = (
   return ["DESC", PAGE_SIZE, pageIndex * PAGE_SIZE];
 };
 
+// TODO - add get static first page of auctions
 const Home: NextPage = () => {
-  const {
-    data = [],
-    error,
-    size,
-    setSize,
-    isValidating,
-  } = useSWRInfinite<Auction[]>(getKey, {
+  const { data, error, size, setSize, isValidating } = useSWRInfinite<
+    Auction[]
+  >(getKey, {
     fetcher: (...args: ["DESC" | "ASC", number, number]) =>
       subgraphService.getAuctions(...args),
   });
@@ -46,7 +43,7 @@ const Home: NextPage = () => {
 
   return (
     <Box paddingX="4" paddingY="5" backgroundColor="background">
-      {data.map((auctions) =>
+      {data?.map((auctions) =>
         auctions.map((auction) => (
           <AuctionRow key={auction.noun.id} auction={auction} />
         ))
@@ -54,7 +51,9 @@ const Home: NextPage = () => {
       {!isRefreshing && !isLoadingInitialData && !isReachingEnd && (
         <Box ref={ref} as="div" display="flex" width="full" height="10" />
       )}
-      {isLoadingMore && <Text variant="label">Loading...</Text>}
+      {!isLoadingInitialData && isLoadingMore && (
+        <Text variant="label">Loading...</Text>
+      )}
       {isRefreshing && <Text variant="label">Refreshing...</Text>}
     </Box>
   );

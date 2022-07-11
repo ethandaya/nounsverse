@@ -51,6 +51,16 @@ const variant = {
       letterSpacing: "0.1em",
     }),
   ]),
+  link: style([
+    atoms({
+      fontSize: "small",
+      fontWeight: "medium",
+    }),
+    style({
+      lineHeight: "1.5rem",
+      textDecoration: "underline",
+    }),
+  ]),
 };
 
 export const variants = recipe({

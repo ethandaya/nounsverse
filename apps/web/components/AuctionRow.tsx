@@ -106,23 +106,36 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                     borderRadius="medium"
                   />
                 )}
-                <Text variant="medium" marginLeft="2.5">
+                <Text
+                  variant="medium"
+                  marginLeft="2.5"
+                  transform={ownerENSName ? "uppercase" : undefined}
+                >
                   {ownerENSName || shortenAddress(noun.owner.address)}
                 </Text>
               </Box>
-              <Text variant="small" color="textSecondary" transform="uppercase">
-                <a
-                  rel="noreferrer"
-                  href={getEtherscanLink(
-                    EtherscanPageType.TOKEN,
-                    NOUN_TOKEN_ADDRESS,
-                    `a=${noun.owner.address}`
-                  )}
-                  target="_blank"
+
+              <Box
+                as="a"
+                display="flex"
+                alignItems="center"
+                rel="noreferrer"
+                href={getEtherscanLink(
+                  EtherscanPageType.TOKEN,
+                  NOUN_TOKEN_ADDRESS,
+                  `a=${noun.owner.address}`
+                )}
+                target="_blank"
+              >
+                <Text
+                  variant="link"
+                  color="textSecondary"
+                  transform="uppercase"
+                  marginRight="0.5"
                 >
                   View on Etherscan
-                </a>
-              </Text>
+                </Text>
+              </Box>
             </Box>
           </Box>
         ) : (
