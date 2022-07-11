@@ -13,18 +13,21 @@ import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 import { Text } from "../elements/Text";
 import { useAuction } from "../hooks/useAuction";
 import { ArrowUpRight } from "react-feather";
+import { useServiceContext } from "../hooks/useServiceContext";
 
 type AuctionRowProps = {
   auction: Auction;
 };
 
 export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
+  const { config } = useServiceContext();
   const { auction = initialAuction } = useAuction(initialAuction.noun.id, {
     fallbackData: initialAuction,
     ...(!initialAuction.settled && {
       refreshInterval: 5000,
     }),
   });
+
   const { noun, imageURL } = useNoun(auction.noun.id, {
     fallbackData: auction.noun,
   });
@@ -40,28 +43,35 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
           <Text variant="label" marginBottom="2">
             {format(fromUnixTime(auction.startTime), "MMMM dd, yy")}
           </Text>
-          <Box
-            display="flex"
-            alignItems="flex-start"
-            justifyContent="flex-start"
+          <a
+            href={`${config.externalBaseURI}/${auction.noun.id}`}
+            target="_blank"
+            rel="noreferrer"
           >
             <Box
-              as="img"
-              width="7"
-              height="7"
-              src={imageURL || "../assets/loading-skull-noun.gif"}
-              alt={`Noun ${auction.noun.id}`}
-              marginRight="2.5"
-            />
-            <Text
-              variant="extraLarge"
-              color={auction.settled ? "text" : "yellow"}
-              lineHeight="none"
+              display="flex"
+              alignItems="flex-start"
+              justifyContent="flex-start"
             >
-              NOUN {auction.noun.id}
-            </Text>
-            <ArrowUpRight color={vars.colors.yellow} size={24} />
-          </Box>
+              <Box
+                as="img"
+                width="7"
+                height="7"
+                src={imageURL || "../assets/loading-skull-noun.gif"}
+                alt={`Noun ${auction.noun.id}`}
+                marginRight="2.5"
+              />
+
+              <Text
+                variant="extraLarge"
+                color={auction.settled ? "text" : "yellow"}
+                lineHeight="none"
+              >
+                NOUN {auction.noun.id}
+              </Text>
+              <ArrowUpRight color={vars.colors.yellow} size={24} />
+            </Box>
+          </a>
         </Box>
         <Box>
           <Text variant="label" marginBottom="2">
@@ -78,17 +88,32 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
           >
             ETH {toFixed(formatEther(auction.amount), 2)}
           </Text>
-          <Text
-            color="textSecondary"
-            weight="medium"
-            transform={bidderENSName || ownerENSName ? "uppercase" : undefined}
+          <a
+            href={getEtherscanLink(
+              EtherscanPageType.ADDRESS,
+              auction.settled
+                ? ownerENSName || noun.owner.address
+                : auction.bidder
+                ? bidderENSName || auction.bidder.address
+                : undefined
+            )}
+            target="_blank"
+            rel="noreferrer"
           >
-            {auction.settled
-              ? ownerENSName || shortenAddress(noun.owner.address)
-              : auction?.bidder
-              ? bidderENSName || shortenAddress(auction.bidder.address)
-              : "NO BIDS YET"}
-          </Text>
+            <Text
+              color="textSecondary"
+              weight="medium"
+              transform={
+                bidderENSName || ownerENSName ? "uppercase" : undefined
+              }
+            >
+              {auction.settled
+                ? ownerENSName || shortenAddress(noun.owner.address)
+                : auction?.bidder
+                ? bidderENSName || shortenAddress(auction.bidder.address)
+                : "NO BIDS YET"}
+            </Text>
+          </a>
         </Box>
         {auction.settled ? (
           <Box>
@@ -114,7 +139,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                 )}
                 <Text
                   variant="medium"
-                  marginLeft="2.5"
+                  marginLeft="1.5"
                   transform={ownerENSName ? "uppercase" : undefined}
                 >
                   {ownerENSName || shortenAddress(noun.owner.address)}

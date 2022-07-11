@@ -24,6 +24,15 @@ export function Banner() {
           <Text transform="uppercase" color="black" padding="1.5">
             {SITE_DESCRIPTION}
           </Text>
+          <Text color="black" padding="1.5">
+            —
+          </Text>
+          <Text color="black" transform="uppercase">
+            Github
+          </Text>
+          <Text color="black" padding="1.5">
+            —
+          </Text>
         </Box>
       </Marquee>
     </Box>
