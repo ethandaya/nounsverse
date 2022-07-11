@@ -8,12 +8,13 @@ import { useNoun } from "../hooks/useNoun";
 import { useProfile } from "../hooks/useProfile";
 import { NOUN_TOKEN_ADDRESS, shortenAddress } from "../utils/address";
 import { CountdownDisplay } from "./CountdownDisplay";
-import { format, fromUnixTime } from "date-fns";
+import { format, fromUnixTime, isPast } from "date-fns";
 import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 import { Text } from "../elements/Text";
 import { useAuction } from "../hooks/useAuction";
 import { ArrowUpRight } from "react-feather";
 import { useServiceContext } from "../hooks/useServiceContext";
+import { useMemo } from "react";
 
 type AuctionRowProps = {
   auction: Auction;
@@ -35,6 +36,11 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
     noun.owner.address
   );
   const { ensName: bidderENSName } = useProfile(auction.bidder?.address);
+
+  const isEnded = useMemo(
+    () => isPast(fromUnixTime(auction.endTime)),
+    [auction]
+  );
 
   return (
     <Box>
@@ -78,7 +84,9 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
             {auction.settled
               ? "Winning Bid"
               : auction.bidder
-              ? "Current Bid"
+              ? isEnded
+                ? "Winning Bid"
+                : "Current Bid"
               : "Reserve Not met"}
           </Text>
           <Text
@@ -159,7 +167,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                 target="_blank"
               >
                 <Text
-                  variant="link"
+                  underline="hover"
                   color="textSecondary"
                   transform="uppercase"
                   marginRight="0.5"
@@ -172,9 +180,14 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
         ) : (
           <Box>
             <Text variant="label" marginBottom="2">
-              Time Remaining
+              {isEnded ? "Auction Ended" : "Time Remaining"}
             </Text>
-            <Text variant="large" transform="uppercase" marginBottom="1">
+            <Text
+              variant="large"
+              transform="uppercase"
+              marginBottom="1"
+              color={isEnded ? "textTertiary" : "text"}
+            >
               <CountdownDisplay to={auction.endTime} />
             </Text>
             <Text transform="uppercase" color="textSecondary" weight="medium">

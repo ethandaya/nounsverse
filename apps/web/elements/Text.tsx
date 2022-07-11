@@ -17,7 +17,8 @@ type Props = {
     | "h6"
     | "label"
     | "p"
-    | "span";
+    | "span"
+    | "a";
   children?: React.ReactNode;
   color?: BoxProps["color"];
   font?: BoxProps["fontFamily"];
@@ -62,6 +63,7 @@ export const Text = React.forwardRef(
       weight,
       whiteSpace,
       wordBreak,
+      underline,
       className = "",
       ...rest
     }: Props,
@@ -74,7 +76,8 @@ export const Text = React.forwardRef(
         className={clsx(
           styles.variants({
             variant,
-            ellipsis: ellipsis ? true : undefined,
+            ellipsis,
+            underline,
           }),
           className
         )}

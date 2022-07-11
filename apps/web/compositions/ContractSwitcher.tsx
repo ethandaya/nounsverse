@@ -35,6 +35,7 @@ export function ContractSwitcher({ isWorking }: ContractSwitcherProps) {
           <Text
             key={idx}
             weight="bold"
+            underline="hover"
             cursor="default"
             color={
               isAddressMatch(address, option.address)

@@ -2,12 +2,13 @@ export enum EtherscanPageType {
   TX = "tx",
   TOKEN = "token",
   ADDRESS = "address",
+  BLOCK = "block",
 }
 
 export function getEtherscanLink(
   type: EtherscanPageType,
-  address: string,
+  pk: string | number,
   query?: string
 ) {
-  return `https://etherscan.io/${type}/${address}${query ? `?${query}` : ""}`;
+  return `https://etherscan.io/${type}/${pk}${query ? `?${query}` : ""}`;
 }

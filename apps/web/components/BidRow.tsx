@@ -13,6 +13,7 @@ import { Text } from "../elements/Text";
 import { formatAgo } from "../utils/dates";
 import { ArrowUpRight } from "react-feather";
 import { BidRowColContainer, BidRowRoot } from "./BidRow.css";
+import { EtherscanPageType, getEtherscanLink } from "../utils/url";
 
 type BidRowProps = {
   bid: Bid;
@@ -31,13 +32,17 @@ export function BidRow({ bid }: BidRowProps) {
 
   return (
     <Box
+      as="a"
+      href={getEtherscanLink(EtherscanPageType.TX, bid.id)}
+      target="_blank"
+      rel="noreferrer"
       className={BidRowRoot}
       marginBottom="5"
       style={{
         gridTemplateColumns: columnTemplate,
       }}
     >
-      <Text variant="link" color="textSecondary">
+      <Text variant="small" color="textSecondary">
         {bid.blockNumber}
       </Text>
       <Box className={BidRowColContainer}>
@@ -46,30 +51,40 @@ export function BidRow({ bid }: BidRowProps) {
           {bid.blockIndex}
         </Text>
       </Box>
-      <Box display="flex" flexDirection="row" justifyContent="flex-start">
-        {avatarURI ? (
-          <Avatar label="Avatar" src={avatarURI} size="6" shape="square" />
-        ) : (
-          <Box
-            width="6"
-            height="6"
-            backgroundColor="yellow"
-            borderRadius="2xLarge"
-          />
+      <a
+        href={getEtherscanLink(
+          EtherscanPageType.ADDRESS,
+          ensName || bid.bidder.address
         )}
-        <Box display="flex" flexDirection="column" marginLeft="2.5">
-          <Text
-            font="mono"
-            transform={ensName ? "uppercase" : undefined}
-            marginBottom="1"
-          >
-            {ensName || shortenAddress(bid.bidder.address)}
-          </Text>
-          <Text variant="small" color="textSecondary">
-            {bid.bidder.tokenBalanceRaw} Nouns
-          </Text>
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Box display="flex" flexDirection="row" justifyContent="flex-start">
+          {avatarURI ? (
+            <Avatar label="Avatar" src={avatarURI} size="6" shape="square" />
+          ) : (
+            <Box
+              width="6"
+              height="6"
+              backgroundColor="yellow"
+              borderRadius="2xLarge"
+            />
+          )}
+          <Box display="flex" flexDirection="column" marginLeft="2.5">
+            <Text
+              font="mono"
+              transform={ensName ? "uppercase" : undefined}
+              marginBottom="1"
+              underline="hover"
+            >
+              {ensName || shortenAddress(bid.bidder.address)}
+            </Text>
+            <Text variant="small" color="textSecondary">
+              {bid.bidder.tokenBalanceRaw} Nouns
+            </Text>
+          </Box>
         </Box>
-      </Box>
+      </a>
       <Box className={BidRowColContainer}>
         <Text font="mono" transform="uppercase">
           ETH {toFixed(formatEther(bid.amount), 2)}
