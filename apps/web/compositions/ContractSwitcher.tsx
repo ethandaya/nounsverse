@@ -5,13 +5,12 @@ import {
   NOUN_TOKEN_ADDRESS,
   shortenAddress,
 } from "../utils/address";
-import { Box, IconRefresh, Spinner } from "degen";
+import { Box, IconRefresh } from "degen";
 import React from "react";
 import { useServiceContext } from "../hooks/useServiceContext";
 import {
   ContractSwitcherRoot,
   RefreshIconSpinner,
-  SwitchLink,
 } from "./ContractSwitcher.css";
 
 const options = [
