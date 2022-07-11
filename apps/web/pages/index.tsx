@@ -80,8 +80,8 @@ const Home: NextPage = () => {
         <link rel="icon" type="image/png" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
 
-        <meta property="og:image" content="/ogImage.jpg" />
-        <meta name="twitter:image" content="/ogImage.jpg" />
+        <meta property="og:image" content={`${SITE_URL}/ogImage.jpg`} />
+        <meta name="twitter:image" content={`${SITE_URL}/ogImage.jpg`} />
       </Head>
       <ContractSwitcher isWorking={isLoadingInitialData || isRefreshing} />
       {data?.map((auctions) =>
