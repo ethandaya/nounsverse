@@ -5,7 +5,13 @@ import { atoms, vars } from "degen";
 const variant = {
   extraLarge: style([
     atoms({
-      fontSize: "headingOne",
+      fontSize: {
+        xs: "headingTwo",
+        sm: "headingOne",
+        md: "headingOne",
+        lg: "headingOne",
+        xl: "headingOne",
+      },
     }),
     style({
       fontWeight: "900",
@@ -13,7 +19,13 @@ const variant = {
   ]),
   large: style([
     atoms({
-      fontSize: "headingTwo",
+      fontSize: {
+        xs: "large",
+        sm: "large",
+        md: "extraLarge",
+        lg: "extraLarge",
+        xl: "extraLarge",
+      },
     }),
     style({
       fontWeight: "700",
@@ -21,7 +33,7 @@ const variant = {
   ]),
   medium: style([
     atoms({
-      fontSize: "extraLarge",
+      fontSize: "large",
     }),
     style({
       fontWeight: "700",

@@ -62,8 +62,7 @@ export function BidRow({ bid }: BidRowProps) {
               label="Avatar"
               src={avatarURI}
               size={{
-                xs: "2",
-                sm: "3",
+                xs: "4",
                 md: "4",
                 lg: "5",
                 xl: "6",
@@ -73,15 +72,13 @@ export function BidRow({ bid }: BidRowProps) {
           ) : (
             <Box
               width={{
-                xs: "2",
-                sm: "3",
+                xs: "4",
                 md: "4",
                 lg: "5",
                 xl: "6",
               }}
               height={{
-                xs: "2",
-                sm: "3",
+                xs: "4",
                 md: "4",
                 lg: "5",
                 xl: "6",
@@ -89,7 +86,6 @@ export function BidRow({ bid }: BidRowProps) {
               backgroundColor="yellow"
               borderRadius={{
                 xs: "medium",
-                sm: "medium",
                 md: "medium",
                 lg: "large",
                 xl: "2xLarge",
@@ -100,7 +96,6 @@ export function BidRow({ bid }: BidRowProps) {
             display="flex"
             flexDirection="column"
             marginLeft={{
-              xs: "1",
               lg: "2",
               xl: "2.5",
             }}

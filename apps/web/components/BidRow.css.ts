@@ -14,9 +14,6 @@ export const BidRowRoot = style([
       [`(min-width: ${breakpoints.md}px)`]: {
         gridTemplateColumns: responsiveGridSizes.md,
       },
-      [`(min-width: 1000px)`]: {
-        gridTemplateColumns: responsiveGridSizes.md,
-      },
       [`(min-width: ${breakpoints.lg}px)`]: {
         gridTemplateColumns: responsiveGridSizes.lg,
       },

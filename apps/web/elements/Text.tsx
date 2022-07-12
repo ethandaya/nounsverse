@@ -44,6 +44,7 @@ type Props = {
   minHeight?: BoxProps["minHeight"];
   cursor?: BoxProps["cursor"];
   width?: BoxProps["width"];
+  flex?: BoxProps["flex"];
 } & styles.TextVariants &
   React.HTMLAttributes<HTMLDivElement>;
 
