@@ -67,11 +67,11 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                 alt={`Noun ${auction.noun.id}`}
                 marginRight="2.5"
               />
-
               <Text
                 variant="extraLarge"
                 color={auction.settled ? "text" : "yellow"}
                 lineHeight="none"
+                width="auto"
               >
                 NOUN {auction.noun.id}
               </Text>

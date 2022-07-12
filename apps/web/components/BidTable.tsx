@@ -4,34 +4,27 @@ import { Box, vars } from "degen";
 import { Text } from "../elements/Text";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "react-feather";
+import { BidRowRoot } from "./BidRow.css";
 
 type BidTableProps = {
   bids: Bid[];
 };
 
 const columns = [
-  { col: "1fr", label: "Block No." },
-  { col: "1fr", label: "Tx Hash" },
-  { col: "2fr", label: "Bidder" },
-  { col: "1fr", label: "Bid" },
-  { col: "1fr", label: "Eth Balance" },
-  { col: "1fr", label: "Prev. Bids" },
-  { col: "1fr", label: "When" },
+  { label: "Block No." },
+  { label: "Tx Hash" },
+  { label: "Bidder" },
+  { label: "Bid" },
+  { label: "Eth Balance" },
+  { label: "Prev. Bids" },
+  { label: "When" },
 ];
-
-export const columnTemplate = columns.map((c) => c.col).join(" ");
 
 export function BidTable({ bids }: BidTableProps) {
   const [showMoreBids, setShowMoreBids] = useState<boolean>(false);
   return (
     <Box marginBottom="6">
-      <Box
-        display="grid"
-        style={{
-          gridTemplateColumns: columnTemplate,
-        }}
-        marginBottom="2"
-      >
+      <Box className={BidRowRoot} marginBottom="2">
         {columns.map((col, idx) => (
           <Text variant="label" key={idx}>
             {col.label}

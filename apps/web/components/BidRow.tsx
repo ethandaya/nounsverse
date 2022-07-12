@@ -1,5 +1,4 @@
 import { Bid } from "../services/interfaces/noun.service";
-import { columnTemplate } from "./BidTable";
 import { Avatar, Box, Skeleton, vars } from "degen";
 import { shortenAddress, shortenTx } from "../utils/address";
 import { formatEther } from "ethers/lib/utils";
@@ -39,9 +38,6 @@ export function BidRow({ bid }: BidRowProps) {
       rel="noreferrer"
       className={BidRowRoot}
       marginBottom="5"
-      style={{
-        gridTemplateColumns: columnTemplate,
-      }}
     >
       <Text variant="small" color="textSecondary">
         {bid.blockNumber}
