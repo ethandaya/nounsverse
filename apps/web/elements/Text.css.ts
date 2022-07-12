@@ -52,10 +52,10 @@ const variant = {
   small: style([
     atoms({
       fontSize: {
-        xs: "extraSmall",
-        sm: "extraSmall",
-        md: "extraSmall",
-        lg: "extraSmall",
+        xs: "label",
+        sm: "label",
+        md: "label",
+        lg: "label",
         xl: "small",
       },
       fontWeight: "normal",
@@ -67,7 +67,10 @@ const variant = {
   label: style([
     atoms({
       color: "textTertiary",
-      fontSize: "label",
+      fontSize: {
+        xs: "extraSmall",
+        sm: "label",
+      },
       fontWeight: "medium",
       textTransform: "uppercase",
     }),

@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { mq } from "../utils/breakpoints";
 import { atoms, vars } from "degen";
 
-export const AuctionHero = style({
+export const AuctionRowRoot = style({
   display: "grid",
   gridTemplateColumns: "1fr",
   "@media": {
@@ -21,13 +21,24 @@ export const AuctionHero = style({
   },
 });
 
+export const AuctionRowLabel = style([
+  atoms({
+    marginBottom: {
+      xs: 1,
+      md: 2,
+    },
+  }),
+]);
+
 export const NounTitleContainer = style({
+  marginBottom: vars.space["5"],
   "@media": {
-    [mq("sm", "max-width")]: {
-      marginBottom: vars.space["3"],
+    [mq("lg")]: {
+      marginBottom: 0,
     },
   },
 });
+
 export const NounTitleArrow = style({
   position: "absolute",
   width: "20px",

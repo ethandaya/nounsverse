@@ -2,12 +2,13 @@ import { Box, vars, Avatar } from "degen";
 import { BidTable } from "./BidTable";
 import { Auction } from "../services/interfaces/noun.service";
 import {
-  AuctionHero,
+  AuctionRowRoot,
   AuctionMetaContainer,
   NounImage,
   NounTitle,
   NounTitleArrow,
   NounTitleContainer,
+  AuctionRowLabel,
 } from "./AuctionRow.css";
 import { useNoun } from "../hooks/useNoun";
 import { useProfile } from "../hooks/useProfile";
@@ -51,9 +52,9 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
 
   return (
     <Box>
-      <Box className={AuctionHero} paddingY="6" marginBottom="3">
-        <Box className={NounTitleContaginer}>
-          <Text variant="label" marginBottom="2">
+      <Box className={AuctionRowRoot} paddingY="6" marginBottom="3">
+        <Box className={NounTitleContainer}>
+          <Text className={AuctionRowLabel} variant="label">
             {format(fromUnixTime(auction.startTime), "MMMM dd, yy")}
           </Text>
           <a
@@ -72,7 +73,6 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                 src={imageURL || "../assets/loading-skull-noun.gif"}
                 alt={`Noun ${auction.noun.id}`}
               />
-
               <Text
                 variant="extraLarge"
                 className={NounTitle}
@@ -89,7 +89,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
         </Box>
         <Box className={AuctionMetaContainer}>
           <Box>
-            <Text variant="label" marginBottom="2">
+            <Text className={AuctionRowLabel} variant="label">
               {auction.settled
                 ? "Winning Bid"
                 : auction.bidder
@@ -133,7 +133,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
             </a>
           </Box>
           <Box>
-            <Text variant="label" marginBottom="2">
+            <Text className={AuctionRowLabel} variant="label">
               {auction.settled
                 ? "Holder"
                 : isEnded
