@@ -59,7 +59,7 @@ export const Text = React.forwardRef(
       lineHeight,
       size,
       transform,
-      variant,
+      variant = "base",
       weight,
       whiteSpace,
       wordBreak,

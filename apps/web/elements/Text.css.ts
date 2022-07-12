@@ -28,12 +28,24 @@ const variant = {
     }),
   ]),
   base: atoms({
-    fontSize: "base",
+    fontSize: {
+      xs: "small",
+      sm: "small",
+      md: "small",
+      lg: "small",
+      xl: "base",
+    },
     fontWeight: "normal",
   }),
   small: style([
     atoms({
-      fontSize: "small",
+      fontSize: {
+        xs: "extraSmall",
+        sm: "extraSmall",
+        md: "extraSmall",
+        lg: "extraSmall",
+        xl: "small",
+      },
       fontWeight: "normal",
     }),
     style({
