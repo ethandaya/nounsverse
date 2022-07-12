@@ -13,7 +13,7 @@ export const responsiveGridSizes: {
   [key in Breakpoint]: string;
 } = {
   sm: "repeat(3, 1fr)",
-  md: "repeat(3, 1fr)",
+  md: "repeat(2, 1fr) 2fr repeat(4, 1fr)",
   lg: "repeat(2, 1fr) 2fr repeat(4, 1fr)",
   xl: "repeat(2, 1fr) 2fr repeat(4, 1fr)",
 };

@@ -58,16 +58,53 @@ export function BidRow({ bid }: BidRowProps) {
       >
         <Box display="flex" flexDirection="row" justifyContent="flex-start">
           {avatarURI ? (
-            <Avatar label="Avatar" src={avatarURI} size="6" shape="square" />
+            <Avatar
+              label="Avatar"
+              src={avatarURI}
+              size={{
+                xs: "2",
+                sm: "3",
+                md: "4",
+                lg: "5",
+                xl: "6",
+              }}
+              shape="square"
+            />
           ) : (
             <Box
-              width="6"
-              height="6"
+              width={{
+                xs: "2",
+                sm: "3",
+                md: "4",
+                lg: "5",
+                xl: "6",
+              }}
+              height={{
+                xs: "2",
+                sm: "3",
+                md: "4",
+                lg: "5",
+                xl: "6",
+              }}
               backgroundColor="yellow"
-              borderRadius="2xLarge"
+              borderRadius={{
+                xs: "medium",
+                sm: "medium",
+                md: "medium",
+                lg: "large",
+                xl: "2xLarge",
+              }}
             />
           )}
-          <Box display="flex" flexDirection="column" marginLeft="2.5">
+          <Box
+            display="flex"
+            flexDirection="column"
+            marginLeft={{
+              xs: "1",
+              lg: "2",
+              xl: "2.5",
+            }}
+          >
             <Text
               font="mono"
               transform={ensName ? "uppercase" : undefined}
