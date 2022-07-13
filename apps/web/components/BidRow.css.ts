@@ -1,23 +1,24 @@
 import { style } from "@vanilla-extract/css";
-import { atoms, breakpoints, vars } from "degen";
+import { atoms, vars } from "degen";
 import { responsiveGridSizes } from "../utils/table";
+import { mq } from "../utils/breakpoints";
 
 export const BidRowRoot = style([
   style({
-    display: "grid",
+    display: "none",
     gridTemplateColumns: responsiveGridSizes.sm,
     gap: "1",
     "@media": {
-      [`(min-width: ${breakpoints.sm}px)`]: {
-        gridTemplateColumns: responsiveGridSizes.sm,
-      },
-      [`(min-width: ${breakpoints.md}px)`]: {
+      [mq("md")]: {
+        display: "grid",
         gridTemplateColumns: responsiveGridSizes.md,
       },
-      [`(min-width: ${breakpoints.lg}px)`]: {
+      [mq("lg")]: {
+        display: "grid",
         gridTemplateColumns: responsiveGridSizes.lg,
       },
-      [`(min-width: ${breakpoints.xl}px)`]: {
+      [mq("xl")]: {
+        display: "grid",
         gridTemplateColumns: responsiveGridSizes.xl,
       },
     },

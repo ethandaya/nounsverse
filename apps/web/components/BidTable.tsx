@@ -1,10 +1,11 @@
 import { Bid } from "../services/interfaces/noun.service";
-import { BidRow } from "./BidRow";
 import { Box, vars } from "degen";
 import { Text } from "../elements/Text";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "react-feather";
-import { BidRowRoot } from "./BidRow.css";
+import { BidCard } from "./BidCard";
+import { BidTableHeaderRoot } from "./BidTable.css";
+import { BidRow } from "./BidRow";
 
 type BidTableProps = {
   bids: Bid[];
@@ -24,7 +25,7 @@ export function BidTable({ bids }: BidTableProps) {
   const [showMoreBids, setShowMoreBids] = useState<boolean>(false);
   return (
     <Box marginBottom="6">
-      <Box className={BidRowRoot} marginBottom="2">
+      <Box className={BidTableHeaderRoot} marginBottom="2">
         {columns.map((col, idx) => (
           <Text variant="label" key={idx}>
             {col.label}
@@ -35,7 +36,10 @@ export function BidTable({ bids }: BidTableProps) {
         .sort((a, b) => b.blockTimestamp - a.blockTimestamp)
         .slice(0, showMoreBids ? bids.length : 5)
         .map((bid, idx) => (
-          <BidRow key={idx} bid={bid} />
+          <>
+            <BidRow key={idx} bid={bid} />
+            <BidCard key={idx} bid={bid} />
+          </>
         ))}
       {bids.length > 7 && (
         <Box
