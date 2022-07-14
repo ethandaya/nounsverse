@@ -32,14 +32,7 @@ export function BidCard({ bid }: BidCardProps) {
   });
 
   return (
-    <Box
-      as="a"
-      className={BidCardRoot}
-      href={getEtherscanLink(EtherscanPageType.TX, bid.id)}
-      target="_blank"
-      rel="noreferrer"
-      marginBottom="5"
-    >
+    <Box className={BidCardRoot} marginBottom="5">
       <Box>
         <Text className={BidCardLabel} variant="label">
           Tx Hash
@@ -62,7 +55,13 @@ export function BidCard({ bid }: BidCardProps) {
               {bid.blockTimestamp}
             </Text>
           </Box>
-          <ArrowUpRight color={vars.colors.yellow} size={20} />
+          <a
+            href={getEtherscanLink(EtherscanPageType.TX, bid.id)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <ArrowUpRight color={vars.colors.yellow} size={20} />
+          </a>
         </Box>
       </Box>
       <Box>

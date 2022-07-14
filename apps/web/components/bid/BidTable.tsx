@@ -36,10 +36,10 @@ export function BidTable({ bids }: BidTableProps) {
         .sort((a, b) => b.blockTimestamp - a.blockTimestamp)
         .slice(0, showMoreBids ? bids.length : 5)
         .map((bid, idx) => (
-          <>
-            <BidRow key={idx} bid={bid} />
-            <BidCard key={idx} bid={bid} />
-          </>
+          <Box key={idx}>
+            <BidRow bid={bid} />
+            <BidCard bid={bid} />
+          </Box>
         ))}
       {bids.length > 7 && (
         <Box

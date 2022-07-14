@@ -12,6 +12,7 @@ import {
   ContractSwitcherRoot,
   RefreshIconSpinner,
 } from "./ContractSwitcher.css";
+import Link from "next/link";
 
 const options = [
   { address: NOUN_TOKEN_ADDRESS, label: "NOUNS" },
@@ -26,26 +27,26 @@ type ContractSwitcherProps = {
 };
 
 export function ContractSwitcher({ isWorking }: ContractSwitcherProps) {
-  const { address, setAddress } = useServiceContext();
+  const { address } = useServiceContext();
 
   return (
     <Box className={ContractSwitcherRoot}>
       <Box display="flex" flexDirection="row" alignItems="center" gap="2">
         {options.map((option, idx) => (
-          <Text
-            key={idx}
-            weight="bold"
-            underline="hover"
-            cursor="default"
-            color={
-              isAddressMatch(address, option.address)
-                ? "yellow"
-                : "textSecondary"
-            }
-            onClick={() => setAddress(option.address)}
-          >
-            {option.label}
-          </Text>
+          <Link key={option.address} href="[address]" as={`/${option.address}`}>
+            <Text
+              weight="bold"
+              underline="hover"
+              cursor="default"
+              color={
+                isAddressMatch(address, option.address)
+                  ? "yellow"
+                  : "textSecondary"
+              }
+            >
+              {option.label}
+            </Text>
+          </Link>
         ))}
         {isWorking && (
           <Box className={RefreshIconSpinner}>

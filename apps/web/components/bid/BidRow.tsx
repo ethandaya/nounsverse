@@ -31,14 +31,7 @@ export function BidRow({ bid }: BidRowProps) {
   });
 
   return (
-    <Box
-      as="a"
-      href={getEtherscanLink(EtherscanPageType.TX, bid.id)}
-      target="_blank"
-      rel="noreferrer"
-      className={BidRowRoot}
-      marginBottom="5"
-    >
+    <Box className={BidRowRoot} marginBottom="5">
       <Text variant="small" color="textSecondary">
         {bid.blockNumber}
       </Text>
@@ -160,7 +153,13 @@ export function BidRow({ bid }: BidRowProps) {
             {bid.blockTimestamp}
           </Text>
         </Box>
-        <ArrowUpRight color={vars.colors.yellow} size={20} />
+        <a
+          href={getEtherscanLink(EtherscanPageType.TX, bid.id)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <ArrowUpRight color={vars.colors.yellow} size={20} />
+        </a>
       </Box>
     </Box>
   );

@@ -3,9 +3,13 @@ import React from "react";
 import { ViewAuctionsTemplate } from "../templates/ViewAuctions";
 import { ServiceCtxProvider } from "../services/ServiceContext";
 import { useRouter } from "next/router";
-import { getStaticAuctionProps, StaticProps } from "../services/static";
+import {
+  getFallbackStaticPaths,
+  getStaticAuctionProps,
+  StaticProps,
+} from "../services/static";
 
-const ViewNouns: NextPage<StaticProps> = ({
+const ViewAuctions: NextPage<StaticProps> = ({
   initialPage,
   nounAddress,
   config,
@@ -24,5 +28,6 @@ const ViewNouns: NextPage<StaticProps> = ({
 };
 
 export const getStaticProps = getStaticAuctionProps;
+export const getStaticPaths = getFallbackStaticPaths;
 
-export default ViewNouns;
+export default ViewAuctions;
