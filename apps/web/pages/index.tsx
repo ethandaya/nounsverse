@@ -10,8 +10,7 @@ import { Text } from "../elements/Text";
 import { useServiceContext } from "../hooks/useServiceContext";
 import { ContractSwitcher } from "../compositions/ContractSwitcher";
 import { Banner } from "../components/Banner";
-import Head from "next/head";
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../utils/seo";
+import { Page } from "../components/Page";
 
 const PAGE_SIZE = 3;
 
@@ -56,33 +55,7 @@ const Home: NextPage = () => {
   const isRefreshing = isValidating && data?.length === size;
 
   return (
-    <Box paddingX="3" paddingY="6">
-      <Head>
-        <title>{SITE_TITLE}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="description" content={SITE_DESCRIPTION} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={SITE_TITLE} key="title" />
-        <meta
-          name="og:description"
-          property="og:description"
-          content={SITE_DESCRIPTION}
-        />
-        <meta property="og:site_name" content={SITE_TITLE} />
-        <meta property="og:url" content={SITE_URL} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={SITE_TITLE} />
-        <meta name="twitter:description" content={SITE_DESCRIPTION} />
-        <meta name="twitter:site" content={SITE_URL} />
-        <meta name="twitter:creator" content="@ethandaya" />
-
-        <link rel="icon" type="image/png" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/favicon.ico" />
-
-        <meta property="og:image" content={`${SITE_URL}/ogImage.jpg`} />
-        <meta name="twitter:image" content={`${SITE_URL}/ogImage.jpg`} />
-      </Head>
+    <Page>
       <ContractSwitcher isWorking={isLoadingInitialData || isRefreshing} />
       {data?.map((auctions) =>
         auctions.map((auction) => (
@@ -100,7 +73,7 @@ const Home: NextPage = () => {
         </Box>
       )}
       <Banner />
-    </Box>
+    </Page>
   );
 };
 
