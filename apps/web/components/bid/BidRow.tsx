@@ -1,18 +1,18 @@
-import { Bid } from "../services/interfaces/noun.service";
+import { Bid } from "../../services/interfaces/noun.service";
 import { Avatar, Box, Skeleton, vars } from "degen";
-import { shortenAddress, shortenTx } from "../utils/address";
+import { shortenAddress, shortenTx } from "../../utils/address";
 import { formatEther } from "ethers/lib/utils";
-import { mul, sum, toFixed } from "../utils/numbers";
-import { useBidsForAddress } from "../hooks/useBidsForAddress";
+import { mul, sum, toFixed } from "../../utils/numbers";
+import { useBidsForAddress } from "../../hooks/useBidsForAddress";
 import formatDistanceToNow from "date-fns/formatDistanceToNowStrict";
 import fromUnixTime from "date-fns/fromUnixTime";
-import { useProfile } from "../hooks/useProfile";
-import { useEthPrice } from "../hooks/useEthPrice";
-import { Text } from "../elements/Text";
-import { formatAgo } from "../utils/dates";
+import { useProfile } from "../../hooks/useProfile";
+import { useEthPrice } from "../../hooks/useEthPrice";
+import { Text } from "../../elements/Text";
+import { formatAgo } from "../../utils/dates";
 import { ArrowUpRight } from "react-feather";
 import { BidRowColContainer, BidRowRoot } from "./BidRow.css";
-import { EtherscanPageType, getEtherscanLink } from "../utils/url";
+import { EtherscanPageType, getEtherscanLink } from "../../utils/url";
 
 type BidRowProps = {
   bid: Bid;

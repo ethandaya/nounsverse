@@ -1,7 +1,7 @@
-import { EtherscanPageType, getEtherscanLink } from "../../utils/url";
+import { EtherscanPageType, getEtherscanLink } from "../../../utils/url";
 import { Avatar, Box } from "degen";
-import { Text } from "../../elements/Text";
-import { shortenAddress } from "../../utils/address";
+import { Text } from "../../../elements/Text";
+import { shortenAddress } from "../../../utils/address";
 
 type BidderBlockProps = {
   avatarURI?: string | null;

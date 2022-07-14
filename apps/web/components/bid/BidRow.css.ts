@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { atoms, vars } from "degen";
-import { responsiveGridSizes } from "../utils/table";
-import { mq } from "../utils/breakpoints";
+import { responsiveGridSizes } from "../../utils/table";
+import { mq } from "../../utils/breakpoints";
 
 export const BidRowRoot = style([
   style({

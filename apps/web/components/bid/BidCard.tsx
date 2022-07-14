@@ -1,18 +1,18 @@
-import { Bid } from "../services/interfaces/noun.service";
-import { useEthPrice } from "../hooks/useEthPrice";
-import { useProfile } from "../hooks/useProfile";
-import { useBidsForAddress } from "../hooks/useBidsForAddress";
-import { EtherscanPageType, getEtherscanLink } from "../utils/url";
+import { Bid } from "../../services/interfaces/noun.service";
+import { useEthPrice } from "../../hooks/useEthPrice";
+import { useProfile } from "../../hooks/useProfile";
+import { useBidsForAddress } from "../../hooks/useBidsForAddress";
+import { EtherscanPageType, getEtherscanLink } from "../../utils/url";
 import { Box, Skeleton, vars } from "degen";
 import { BidCardLabel, BidCardRoot } from "./BidCard.css";
-import { Text } from "../elements/Text";
-import { shortenTx } from "../utils/address";
-import { formatAgo } from "../utils/dates";
+import { Text } from "../../elements/Text";
+import { shortenTx } from "../../utils/address";
+import { formatAgo } from "../../utils/dates";
 import formatDistanceToNow from "date-fns/formatDistanceToNowStrict";
 import fromUnixTime from "date-fns/fromUnixTime";
 import { ArrowUpRight } from "react-feather";
-import { BidderBlock } from "./Bid/BidderBlock";
-import { mul, sum, toFixed } from "../utils/numbers";
+import { BidderBlock } from "./blocks/BidderBlock";
+import { mul, sum, toFixed } from "../../utils/numbers";
 import { formatEther } from "ethers/lib/utils";
 
 type BidCardProps = {

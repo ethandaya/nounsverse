@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { atoms, vars } from "degen";
-import { mq } from "../utils/breakpoints";
+import { mq } from "../../utils/breakpoints";
 
 export const BidCardRoot = style([
   atoms({

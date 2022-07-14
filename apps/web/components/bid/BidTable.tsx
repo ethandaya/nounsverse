@@ -1,6 +1,6 @@
-import { Bid } from "../services/interfaces/noun.service";
+import { Bid } from "../../services/interfaces/noun.service";
 import { Box, vars } from "degen";
-import { Text } from "../elements/Text";
+import { Text } from "../../elements/Text";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "react-feather";
 import { BidCard } from "./BidCard";

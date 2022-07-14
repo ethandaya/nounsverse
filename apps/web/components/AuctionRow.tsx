@@ -1,5 +1,5 @@
 import { Box, vars, Avatar } from "degen";
-import { BidTable } from "./BidTable";
+import { BidTable } from "./bid/BidTable";
 import { Auction } from "../services/interfaces/noun.service";
 import {
   AuctionRowRoot,
@@ -91,11 +91,11 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
           <Box>
             <Text className={AuctionRowLabel} variant="label">
               {auction.settled
-                ? "Winning Bid"
+                ? "Winning bid"
                 : auction.bidder
                 ? isEnded
-                  ? "Winning Bid"
-                  : "Current Bid"
+                  ? "Winning bid"
+                  : "Current bid"
                 : "Reserve Not met"}
             </Text>
             <Text

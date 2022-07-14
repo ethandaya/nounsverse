@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
-import { responsiveGridSizes } from "../utils/table";
-import { mq } from "../utils/breakpoints";
+import { responsiveGridSizes } from "../../utils/table";
+import { mq } from "../../utils/breakpoints";
 
 export const BidTableHeaderRoot = style({
   display: "none",
