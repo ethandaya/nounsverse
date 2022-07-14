@@ -4,6 +4,8 @@ import { ViewAuctionsTemplate } from "../templates/ViewAuctions";
 import { ServiceCtxProvider } from "../services/ServiceContext";
 import { useRouter } from "next/router";
 import { getStaticAuctionProps, StaticProps } from "../services/static";
+import { Page } from "../components/Page";
+import { FallbackPage } from "../templates/FallbackPage";
 
 const ViewNouns: NextPage<StaticProps> = ({
   initialPage,
@@ -13,13 +15,19 @@ const ViewNouns: NextPage<StaticProps> = ({
   const { isFallback } = useRouter();
 
   if (isFallback) {
-    return <span>...loading</span>;
+    return <FallbackPage />;
   }
 
   return (
-    <ServiceCtxProvider key={nounAddress} address={nounAddress} config={config}>
-      <ViewAuctionsTemplate initialPage={initialPage} />
-    </ServiceCtxProvider>
+    <Page>
+      <ServiceCtxProvider
+        key={nounAddress}
+        address={nounAddress}
+        config={config}
+      >
+        <ViewAuctionsTemplate initialPage={initialPage} />
+      </ServiceCtxProvider>
+    </Page>
   );
 };
 

@@ -4,7 +4,6 @@ import React, { useCallback, useMemo } from "react";
 import { Auction } from "../services/interfaces/noun.service";
 import useSWRInfinite from "swr/infinite";
 import { useInView } from "react-intersection-observer";
-import { Page } from "../components/Page";
 import { ContractSwitcher } from "../compositions/ContractSwitcher";
 import { AuctionRow } from "../components/AuctionRow";
 import { Box } from "degen";
@@ -67,7 +66,7 @@ export function ViewAuctionsTemplate({
   );
 
   return (
-    <Page>
+    <Box paddingX="3" paddingY="6">
       <ContractSwitcher isWorking={isLoadingInitialData || isRefreshing} />
       {data?.map((auctions) =>
         auctions.map((auction) => (
@@ -85,6 +84,6 @@ export function ViewAuctionsTemplate({
         </Box>
       )}
       <Banner />
-    </Page>
+    </Box>
   );
 }

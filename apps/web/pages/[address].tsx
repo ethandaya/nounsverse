@@ -8,6 +8,9 @@ import {
   getStaticAuctionProps,
   StaticProps,
 } from "../services/static";
+import { Page } from "../components/Page";
+import { SITE_TITLE } from "../utils/seo";
+import { FallbackPage } from "../templates/FallbackPage";
 
 const ViewAuctions: NextPage<StaticProps> = ({
   initialPage,
@@ -17,13 +20,19 @@ const ViewAuctions: NextPage<StaticProps> = ({
   const { isFallback } = useRouter();
 
   if (isFallback) {
-    return <span>...loading</span>;
+    return <FallbackPage />;
   }
 
   return (
-    <ServiceCtxProvider key={nounAddress} address={nounAddress} config={config}>
-      <ViewAuctionsTemplate initialPage={initialPage} />
-    </ServiceCtxProvider>
+    <Page title={`${SITE_TITLE} | ${config.name.toLowerCase()}s`}>
+      <ServiceCtxProvider
+        key={nounAddress}
+        address={nounAddress}
+        config={config}
+      >
+        <ViewAuctionsTemplate initialPage={initialPage} />
+      </ServiceCtxProvider>
+    </Page>
   );
 };
 

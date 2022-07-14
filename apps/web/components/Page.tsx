@@ -19,7 +19,7 @@ export function Page({
   children,
 }: PageProps) {
   return (
-    <Box paddingX="3" paddingY="6">
+    <Box>
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
