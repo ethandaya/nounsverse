@@ -8,7 +8,6 @@ import {
 import { gql, GraphQLClient } from "graphql-request";
 import { Agent } from "@zoralabs/nft-metadata";
 import { ALCHEMY_API_KEY } from "../utils/network";
-import { LIL_NOUN_TOKEN_ADDRESS } from "../utils/address";
 
 const agent = new Agent({
   network: "homestead",
