@@ -85,5 +85,5 @@ export const NounImage = style([
 
 export const AuctionMetaContainer = style({
   display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
+  gridTemplateColumns: "repeat(2, 50%)",
 });

@@ -181,6 +181,7 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                       variant="medium"
                       marginLeft="1.5"
                       transform={ownerENSName ? "uppercase" : undefined}
+                      ellipsis
                     >
                       {ownerENSName || shortenAddress(noun.owner.address)}
                     </Text>

@@ -53,7 +53,14 @@ export function ContractSwitcher({ isWorking }: ContractSwitcherProps) {
           </Box>
         )}
       </Box>
-      <Text color="textSecondary" weight="medium">
+      <Text
+        color="textSecondary"
+        weight="medium"
+        display={{
+          xs: "none",
+          sm: "block",
+        }}
+      >
         {shortenAddress(address)}
       </Text>
     </Box>

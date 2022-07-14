@@ -62,6 +62,7 @@ export function BidderBlock({
           display="flex"
           flexDirection="column"
           marginLeft={{
+            xs: "1",
             sm: "1",
             lg: "2",
             xl: "2.5",

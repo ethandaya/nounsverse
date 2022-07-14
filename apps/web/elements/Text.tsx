@@ -3,6 +3,7 @@ import * as styles from "./Text.css";
 import { Box, BoxProps } from "degen";
 import clsx from "clsx";
 
+// TODO - Augment Box to accept element type??
 type Props = {
   className?: string;
   align?: BoxProps["textAlign"];
@@ -45,6 +46,7 @@ type Props = {
   cursor?: BoxProps["cursor"];
   width?: BoxProps["width"];
   flex?: BoxProps["flex"];
+  display?: BoxProps["display"];
 } & styles.TextVariants &
   React.HTMLAttributes<HTMLDivElement>;
 

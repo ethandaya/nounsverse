@@ -1,5 +1,6 @@
 import { keyframes, style } from "@vanilla-extract/css";
 import { motionSafe } from "degen";
+import { mq } from "../utils/breakpoints";
 
 const rotate = keyframes({
   "100%": { transform: "rotate(1turn)" },
@@ -13,5 +14,10 @@ export const RefreshIconSpinner = style({
 
 export const ContractSwitcherRoot = style({
   display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
+  gridTemplateColumns: "1fr",
+  "@media": {
+    [mq("sm")]: {
+      gridTemplateColumns: "repeat(2, 50%)",
+    },
+  },
 });

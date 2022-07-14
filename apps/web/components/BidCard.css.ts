@@ -1,7 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { atoms, vars } from "degen";
 import { mq } from "../utils/breakpoints";
-import { responsiveGridSizes } from "../utils/table";
 
 export const BidCardRoot = style([
   atoms({
