@@ -2,7 +2,7 @@ import { Controller, Get, Logger, Param } from '@nestjs/common';
 import { NounService } from './noun.service';
 import { getAddress } from '@ethersproject/address';
 
-@Controller('metadata')
+@Controller('noun')
 export class NounController {
   logger: Logger = new Logger(NounController.name);
 
