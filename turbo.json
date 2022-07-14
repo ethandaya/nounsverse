@@ -19,6 +19,14 @@
         ".next/**"
       ]
     },
+    "api#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
     "lint": {
       "outputs": []
     },
