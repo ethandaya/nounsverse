@@ -26,6 +26,7 @@ export const providers: Provider[] = [
           'ALCHEMY_API_KEY',
         )}`,
         timeout: 40 * 1000,
+        ipfsGatewayUrl: configService.get('IPFS_URL'),
       }),
   },
 ];

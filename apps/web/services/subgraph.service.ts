@@ -8,6 +8,17 @@ import {
 import { gql, GraphQLClient } from "graphql-request";
 import { Agent } from "@zoralabs/nft-metadata";
 import { ALCHEMY_API_KEY } from "../utils/network";
+import axios from "axios";
+
+const NOUNSVERSE_API_URL = process.env.NEXT_PUBLIC_NOUNSVERSE_API_URL;
+
+if (!NOUNSVERSE_API_URL) {
+  throw new Error("NEXT_PUBLIC_NOUNSVERSE_API_URL is a required env var");
+}
+
+const api = axios.create({
+  baseURL: NOUNSVERSE_API_URL,
+});
 
 const agent = new Agent({
   network: "homestead",
@@ -126,7 +137,8 @@ export class SubgraphService implements NounService {
   }
 
   public async getImageURL(nounId: string): Promise<string | undefined> {
-    const resp = await agent.fetchMetadata(this.address, nounId);
+    const { data: resp } = await api.get(`/noun/${this.address}/${nounId}`);
+    // const resp = await agent.fetchMetadata(this.address, nounId);
     // TODO - it works but ???
     if (resp?.imageURL) {
       const imageURL = resp.imageURL;
