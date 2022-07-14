@@ -29,6 +29,7 @@ if (!NEXT_PUBLIC_LIL_NOUNS_DAO_SUBGRAPH_URL) {
 export type NounishConfig = {
   baseURI: string;
   externalBaseURI: string;
+  name: string;
 };
 
 export interface ServiceCtx {
@@ -45,11 +46,13 @@ export const configLookup = (address: string): NounishConfig | undefined => {
       return {
         baseURI: NEXT_PUBLIC_NOUNS_DAO_SUBGRAPH_URL,
         externalBaseURI: "https://nouns.wtf/noun",
+        name: "Noun",
       };
     case LIL_NOUN_TOKEN_ADDRESS:
       return {
         baseURI: NEXT_PUBLIC_LIL_NOUNS_DAO_SUBGRAPH_URL,
         externalBaseURI: "https://lilnouns.wtf/lilnoun",
+        name: "Lil Noun",
       };
     default:
       return;

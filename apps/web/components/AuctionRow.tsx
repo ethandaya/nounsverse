@@ -77,8 +77,9 @@ export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
                 variant="extraLarge"
                 className={NounTitle}
                 color={auction.settled ? "text" : "yellow"}
+                transform="uppercase"
               >
-                NOUN {auction.noun.id}
+                {config.name} {auction.noun.id}
                 <ArrowUpRight
                   className={NounTitleArrow}
                   color={vars.colors.yellow}

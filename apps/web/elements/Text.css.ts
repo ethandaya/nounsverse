@@ -6,8 +6,8 @@ const variant = {
   extraLarge: style([
     atoms({
       fontSize: {
-        xs: "headingTwo",
-        sm: "headingOne",
+        xs: "extraLarge",
+        sm: "headingTwo",
         md: "headingOne",
         lg: "headingOne",
         xl: "headingOne",

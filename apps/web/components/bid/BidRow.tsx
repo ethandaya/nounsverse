@@ -13,6 +13,7 @@ import { formatAgo } from "../../utils/dates";
 import { ArrowUpRight } from "react-feather";
 import { BidRowColContainer, BidRowRoot } from "./BidRow.css";
 import { EtherscanPageType, getEtherscanLink } from "../../utils/url";
+import { useServiceContext } from "../../hooks/useServiceContext";
 
 type BidRowProps = {
   bid: Bid;
@@ -20,6 +21,7 @@ type BidRowProps = {
 
 // TODO - add motion to animate in render
 export function BidRow({ bid }: BidRowProps) {
+  const { config } = useServiceContext();
   const { rate } = useEthPrice(bid.blockNumber);
   const { ensName, avatarURI, balance } = useProfile(
     bid.bidder.address,
@@ -102,7 +104,7 @@ export function BidRow({ bid }: BidRowProps) {
               {ensName || shortenAddress(bid.bidder.address)}
             </Text>
             <Text variant="small" color="textSecondary">
-              {bid.bidder.tokenBalanceRaw} Nouns
+              {bid.bidder.tokenBalanceRaw} {config.name}s
             </Text>
           </Box>
         </Box>
