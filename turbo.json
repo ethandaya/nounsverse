@@ -1,19 +1,35 @@
 {
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
     },
     "web#build": {
-    "dependsOn": [
-      "^build",
-      "$NEXT_PUBLIC_SUBGRAPH_URL",
-      "$NEXT_PUBLIC_ALCHEMY_API_KEY"
-    ],
-    "outputs": [".next/**"]
-  },
+      "dependsOn": [
+        "^build",
+        "$NEXT_PUBLIC_SUBGRAPH_URL",
+        "$NEXT_PUBLIC_ALCHEMY_API_KEY"
+      ],
+      "outputs": [
+        ".next/**"
+      ]
+    },
     "lint": {
       "outputs": []
+    },
+    "api#infra:up": {
+      "outputs": []
+    },
+    "api#dev": {
+      "dependsOn": [
+        "infra:up"
+      ],
+      "cache": false
     },
     "dev": {
       "cache": false
