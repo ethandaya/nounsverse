@@ -1,19 +1,20 @@
 {
   "pipeline": {
-    "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**"
-      ]
-    },
     "web#build": {
       "dependsOn": [
         "^build",
-        "$NEXT_PUBLIC_SUBGRAPH_URL",
-        "$NEXT_PUBLIC_ALCHEMY_API_KEY"
+        "$NEXT_PUBLIC_NOUNS_ADDRESS",
+        "$NEXT_PUBLIC_NOUNS_DAO_SUBGRAPH_URL",
+        "$NEXT_PUBLIC_LIL_NOUNS_ADDRESS",
+        "$NEXT_PUBLIC_LIL_NOUNS_DAO_SUBGRAPH_URL",
+        "$NEXT_PUBLIC_UNISWAP_SUBGRAPH_URL",
+        "$NEXT_PUBLIC_ALCHEMY_API_KEY",
+        "$NEXT_PUBLIC_NOUNSVERSE_API_URL",
+        "$NEXT_PUBLIC_GA_ID",
+        "$NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_API_KEY",
+        "$NEXT_PUBLIC_TYPESENSE_HOST",
+        "$NEXT_PUBLIC_TYPESENSE_PORT",
+        "$NEXT_PUBLIC_TYPESENSE_PROTOCOL"
       ],
       "outputs": [
         ".next/**"
@@ -27,9 +28,6 @@
         "dist/**"
       ]
     },
-    "lint": {
-      "outputs": []
-    },
     "api#infra:up": {
       "outputs": []
     },
@@ -38,6 +36,18 @@
         "infra:up"
       ],
       "cache": false
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
+    },
+    "lint": {
+      "outputs": []
     },
     "dev": {
       "cache": false

@@ -56,6 +56,7 @@ export class NounService {
       .documents()
       .create(
         {
+          id: `${tokenAddress}=${tokenId}`,
           ...result,
           ...flattenAttributesForSearch(result.attributes),
         },
