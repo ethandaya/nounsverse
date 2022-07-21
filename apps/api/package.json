@@ -17,7 +17,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "setup:typesense": "ts-node scripts/createNounsCollection.ts"
+    "setup:typesense": "ts-node scripts/createNounsCollection.ts && ts-node scripts/bulkInsertCollection.ts",
+    "migrate:local": "dotenv -e .env.local -- yarn prisma migrate dev"
   },
   "dependencies": {
     "@ethersproject/address": "^5.6.1",

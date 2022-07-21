@@ -18,6 +18,7 @@ async function main() {
     apiKey: configService.get('TYPESENSE_API_KEY'),
     connectionTimeoutSeconds: 10,
   });
+  await client.collections('nouns').delete();
   await client.collections().create(nounSchema);
 }
 

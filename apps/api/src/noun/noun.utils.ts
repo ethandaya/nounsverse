@@ -1,16 +1,18 @@
-import { Prisma } from '@prisma/client';
+import { Noun, Prisma } from '@prisma/client';
 import { CollectionCreateSchema } from 'typesense/src/Typesense/Collections';
 
 export const nounSchema: CollectionCreateSchema = {
   name: 'nouns',
   fields: [
-    { name: 'tokenId', type: 'string' },
+    { name: 'tokenId', type: 'int32' },
     { name: 'tokenAddress', type: 'string' },
-    { name: 'attribute_background', type: 'string' },
-    { name: 'attribute_body', type: 'string' },
-    { name: 'attribute_accessory', type: 'string' },
-    { name: 'attribute_head', type: 'string' },
-    { name: 'attribute_glasses', type: 'string' },
+    { name: 'name', type: 'string' },
+    { name: 'description', type: 'string' },
+    { name: 'attribute_background', type: 'string', facet: true },
+    { name: 'attribute_body', type: 'string', facet: true },
+    { name: 'attribute_accessory', type: 'string', facet: true },
+    { name: 'attribute_head', type: 'string', facet: true },
+    { name: 'attribute_glasses', type: 'string', facet: true },
   ],
   default_sorting_field: 'tokenId',
 };
@@ -29,4 +31,13 @@ export function flattenAttributesForSearch(attributes: Prisma.JsonValue) {
       [`attribute_${val.trait_type}`]: val.value,
     };
   }, {});
+}
+
+export function nounToTypesenseDocument(noun: Noun) {
+  return {
+    id: `${noun.tokenAddress}=${noun.tokenId}`,
+    ...noun,
+    tokenId: parseInt(noun.tokenId.toString(), 10),
+    ...flattenAttributesForSearch(noun.attributes),
+  };
 }

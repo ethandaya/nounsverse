@@ -5,7 +5,7 @@ import { CreateNounDto } from './dto/create-noun.dto';
 import { PrismaService } from '../common/prisma.service';
 import { Client } from 'typesense';
 import { ConfigService } from '@nestjs/config';
-import { flattenAttributesForSearch } from './noun.utils';
+import { nounToTypesenseDocument } from './noun.utils';
 
 @Injectable()
 export class NounService {
@@ -29,7 +29,7 @@ export class NounService {
     });
   }
 
-  public async fetchOrGet(tokenAddress: string, tokenId: string) {
+  public async fetchOrGet(tokenAddress: string, tokenId: string, sync = true) {
     const noun = await this.findOne(tokenAddress, tokenId);
     if (noun) {
       return noun;
@@ -51,19 +51,15 @@ export class NounService {
       externalLink: resp.externalLink || null,
       attributes: resp.attributes || [],
     });
-    await this.typesense
-      .collections('nouns')
-      .documents()
-      .create(
-        {
-          id: `${tokenAddress}=${tokenId}`,
-          ...result,
-          ...flattenAttributesForSearch(result.attributes),
-        },
-        {
+    if (sync) {
+      await this.typesense
+        .collections('nouns')
+        .documents()
+        .create(nounToTypesenseDocument(result), {
           dirty_values: 'coerce_or_reject',
-        },
-      );
+        });
+    }
+
     return result;
   }
 
