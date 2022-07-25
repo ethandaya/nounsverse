@@ -1,0 +1,35 @@
+{
+  "name": "@nounsverse/queries",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react",
+    "lint": "TIMING=1 eslint src/**/*.ts* --fix",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "devDependencies": {
+    "@nounsverse/tsconfig": "*",
+    "eslint": "^8.15.0",
+    "eslint-config-acme": "*",
+    "tsup": "^5.10.1",
+    "typescript": "4.7.4",
+    "gql": "^1.1.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "gql": "^1.1.2"
+  },
+  "dependencies": {
+    "graphql-request": "^4.3.0"
+  }
+}

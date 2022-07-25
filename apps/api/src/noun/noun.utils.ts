@@ -1,7 +1,7 @@
 import { Noun, Prisma } from '@prisma/client';
 import { CollectionCreateSchema } from 'typesense/src/Typesense/Collections';
 
-export const nounSchema: CollectionCreateSchema = {
+export const nounAndAuctionSchema: CollectionCreateSchema = {
   name: 'nouns',
   fields: [
     { name: 'tokenId', type: 'int32' },

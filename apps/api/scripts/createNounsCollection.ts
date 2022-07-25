@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/app.module';
 import { ConfigService } from '@nestjs/config';
 import { Client } from 'typesense';
-import { nounSchema } from '../src/noun/noun.utils';
+import { nounAndAuctionSchema } from '../src/noun/noun.utils';
 
 async function main() {
   const app = await NestFactory.create(AppModule);
@@ -19,7 +19,7 @@ async function main() {
     connectionTimeoutSeconds: 10,
   });
   await client.collections('nouns').delete();
-  await client.collections().create(nounSchema);
+  await client.collections().create(nounAndAuctionSchema);
 }
 
 main().then(() => console.log('Nouns Collection Created'));

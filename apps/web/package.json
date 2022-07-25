@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nounsverse/queries": "*",
     "@rainbow-me/rainbowkit": "^0.4.1",
     "@vanilla-extract/css": "^1.7.2",
     "@vanilla-extract/recipes": "^0.2.5",
