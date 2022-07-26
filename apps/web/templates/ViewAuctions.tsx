@@ -70,7 +70,11 @@ export function ViewAuctionsTemplate({
       <ContractSwitcher isWorking={isLoadingInitialData || isRefreshing} />
       {data?.map((auctions) =>
         auctions.map((auction) => (
-          <AuctionRow key={`${address}-${auction.noun.id}`} auction={auction} />
+          <AuctionRow
+            nounId={auction.noun.id}
+            key={`${address}-${auction.noun.id}`}
+            auction={auction}
+          />
         ))
       )}
       {!isRefreshing && !isLoadingInitialData && !isReachingEnd && (
