@@ -10,5 +10,9 @@ export function useAuction(nounId: string, opts?: SWRConfiguration) {
     opts
   );
 
-  return { auction: data, isLoading: !data, ...rest };
+  if (nounId === "380") {
+    console.log({ data });
+  }
+
+  return { auction: data, isLoading: typeof data === "undefined", ...rest };
 }

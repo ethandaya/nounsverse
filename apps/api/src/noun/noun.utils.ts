@@ -5,7 +5,7 @@ export const nounAndAuctionSchema: CollectionCreateSchema = {
   name: 'nouns',
   fields: [
     { name: 'tokenId', type: 'int32' },
-    { name: 'tokenAddress', type: 'string' },
+    { name: 'tokenAddress', type: 'string', facet: true },
     { name: 'name', type: 'string' },
     { name: 'description', type: 'string' },
     { name: 'attribute_background', type: 'string', facet: true },

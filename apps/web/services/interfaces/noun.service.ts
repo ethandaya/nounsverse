@@ -14,6 +14,8 @@ export type Bid = {
 
 export type Noun = {
   id: string;
+  tokenId: string;
+  tokenAddress: string;
   owner: Account;
 };
 

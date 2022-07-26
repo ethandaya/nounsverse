@@ -6,8 +6,6 @@ import { PrismaService } from '../common/prisma.service';
 import { Client } from 'typesense';
 import { ConfigService } from '@nestjs/config';
 import { nounToTypesenseDocument } from './noun.utils';
-import request from 'graphql-request';
-import { GET_AUCTION_BY_ID } from '@nounsverse/queries';
 
 @Injectable()
 export class NounService {
@@ -89,17 +87,6 @@ export class NounService {
 
   private async fetchMetadata(tokenAddress: string, tokenId: string) {
     return this.agent.fetchMetadata(tokenAddress, tokenId);
-  }
-
-  public async fetchAuction(tokenAddress: string, tokenId: string) {
-    const BASE_URL = this.lookupSubgraphBase(tokenAddress);
-    if (!BASE_URL) {
-      throw new Error(`No configured subgraph for ${tokenAddress}`);
-    }
-    const resp = await request(BASE_URL, GET_AUCTION_BY_ID, {
-      id: tokenId,
-    });
-    return resp.auction;
   }
 
   private async saveNoun(dto: CreateNounDto) {
