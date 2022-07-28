@@ -5,113 +5,24 @@ import {
   Noun,
   NounService,
 } from "./interfaces/noun.service";
-import { gql, GraphQLClient } from "graphql-request";
-import { Agent } from "@zoralabs/nft-metadata";
-import { ALCHEMY_API_KEY } from "../utils/network";
-import { LIL_NOUN_TOKEN_ADDRESS } from "../utils/address";
+import { GraphQLClient } from "graphql-request";
+import axios from "axios";
+import {
+  GET_NOUN_BY_ID,
+  GET_AUCTION_BY_ID,
+  GET_AUCTIONS_BY_ID,
+  GET_BIDS,
+} from "@nounsverse/queries";
 
-const agent = new Agent({
-  network: "homestead",
-  networkUrl: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
-  timeout: 40 * 1000,
+const NOUNSVERSE_API_URL = process.env.NEXT_PUBLIC_NOUNSVERSE_API_URL;
+
+if (!NOUNSVERSE_API_URL) {
+  throw new Error("NEXT_PUBLIC_NOUNSVERSE_API_URL is a required env var");
+}
+
+const api = axios.create({
+  baseURL: NOUNSVERSE_API_URL,
 });
-
-const ACCOUNT_FRAGMENT = gql`
-  fragment AccountFragment on Account {
-    address: id
-    tokenBalanceRaw
-  }
-`;
-
-const BID_FRAGMENT = gql`
-  fragment BidFragment on Bid {
-    id
-    amount
-    blockNumber
-    blockIndex: txIndex
-    blockTimestamp
-    bidder {
-      ...AccountFragment
-    }
-  }
-  ${ACCOUNT_FRAGMENT}
-`;
-
-const NOUN_FRAGMENT = gql`
-  fragment NounFragment on Noun {
-    id
-    owner {
-      ...AccountFragment
-    }
-  }
-  ${ACCOUNT_FRAGMENT}
-`;
-
-const AUCTION_FRAGMENT = gql`
-  fragment AuctionFragment on Auction {
-    noun {
-      ...NounFragment
-    }
-    amount
-    settled
-    startTime
-    endTime
-    bids {
-      ...BidFragment
-    }
-    bidder {
-      ...AccountFragment
-    }
-  }
-  ${BID_FRAGMENT}
-  ${NOUN_FRAGMENT}
-  ${ACCOUNT_FRAGMENT}
-`;
-
-const GET_NOUN_BY_ID = gql`
-  query GetNounById($nounId: ID!) {
-    noun(id: $nounId) {
-      ...NounFragment
-    }
-  }
-  ${NOUN_FRAGMENT}
-`;
-
-const GET_AUCTION_BY_ID = gql`
-  query GetAuctionById($id: ID!) {
-    auction(id: $id) {
-      ...AuctionFragment
-    }
-  }
-  ${AUCTION_FRAGMENT}
-`;
-
-const GET_AUCTIONS_BY_ID = gql`
-  query GetAuctions($order: String, $limit: Int, $offset: Int) {
-    auctions(
-      orderBy: endTime
-      orderDirection: $order
-      first: $limit
-      skip: $offset
-    ) {
-      ...AuctionFragment
-    }
-  }
-  ${AUCTION_FRAGMENT}
-`;
-
-const GET_BIDS = gql`
-  query GetBids($address: String, $blockNumber: Int, $offset: Int!) {
-    bids(
-      where: { bidder: $address }
-      block: { number: $blockNumber }
-      skip: $offset
-    ) {
-      ...BidFragment
-    }
-  }
-  ${BID_FRAGMENT}
-`;
 
 export class SubgraphService implements NounService {
   constructor(
@@ -127,7 +38,8 @@ export class SubgraphService implements NounService {
   }
 
   public async getImageURL(nounId: string): Promise<string | undefined> {
-    const resp = await agent.fetchMetadata(this.address, nounId);
+    const { data: resp } = await api.get(`/noun/${this.address}/${nounId}`);
+    // const resp = await agent.fetchMetadata(this.address, nounId);
     // TODO - it works but ???
     if (resp?.imageURL) {
       const imageURL = resp.imageURL;

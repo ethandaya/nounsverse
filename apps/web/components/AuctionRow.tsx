@@ -1,14 +1,14 @@
-import { Box, vars, Avatar } from "degen";
+import { Avatar, Box, vars } from "degen";
 import { BidTable } from "./bid/BidTable";
 import { Auction } from "../services/interfaces/noun.service";
 import {
-  AuctionRowRoot,
   AuctionMetaContainer,
+  AuctionRowLabel,
+  AuctionRowRoot,
   NounImage,
   NounTitle,
   NounTitleArrow,
   NounTitleContainer,
-  AuctionRowLabel,
 } from "./AuctionRow.css";
 import { useNoun } from "../hooks/useNoun";
 import { useProfile } from "../hooks/useProfile";
@@ -25,30 +25,174 @@ import { CountdownDisplay } from "./CountdownDisplay";
 import { formatEther } from "ethers/lib/utils";
 
 type AuctionRowProps = {
-  auction: Auction;
+  nounId: string;
+  auction?: Auction;
 };
 
-export function AuctionRow({ auction: initialAuction }: AuctionRowProps) {
+export function AuctionRow({
+  nounId,
+  auction: initialAuction,
+}: AuctionRowProps) {
   const { config } = useServiceContext();
-  const { auction = initialAuction } = useAuction(initialAuction.noun.id, {
-    fallbackData: initialAuction,
-    ...(!initialAuction.settled && {
-      refreshInterval: 1000 * 30,
-    }),
-  });
+  const { auction = initialAuction, isLoading: isAuctionLoading } = useAuction(
+    nounId,
+    {
+      ...(initialAuction && {
+        fallbackData: initialAuction,
+        ...(!initialAuction.settled && {
+          refreshInterval: 1000 * 30,
+        }),
+      }),
+    }
+  );
 
-  const { noun, imageURL } = useNoun(auction.noun.id, {
-    fallbackData: auction.noun,
+  // TODO - hella dank
+  const { auction: previousAuction } = useAuction(
+    (parseInt(nounId, 10) - 1).toString()
+  );
+
+  const { noun, imageURL } = useNoun(nounId, {
+    fallbackData: auction?.noun,
   });
   const { ensName: ownerENSName, avatarURI: ownerAvatarURI } = useProfile(
-    noun.owner.address
+    noun?.owner.address
   );
-  const { ensName: bidderENSName } = useProfile(auction.bidder?.address);
+  const { ensName: bidderENSName } = useProfile(auction?.bidder?.address);
 
   const isEnded = useMemo(
-    () => isPast(fromUnixTime(auction.endTime)),
+    () => (auction ? isPast(fromUnixTime(auction.endTime)) : false),
     [auction]
   );
+
+  if (!auction) {
+    return (
+      <Box>
+        <Box className={AuctionRowRoot} paddingY="6" marginBottom="3">
+          <Box className={NounTitleContainer}>
+            <Text className={AuctionRowLabel} variant="label">
+              {previousAuction
+                ? format(fromUnixTime(previousAuction.startTime), "MMMM dd, yy")
+                : ""}
+            </Text>
+            <a
+              href={`${config.externalBaseURI}/${nounId}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Box
+                display="flex"
+                alignItems="flex-end"
+                justifyContent="flex-start"
+              >
+                <Box
+                  as="img"
+                  className={NounImage}
+                  src={imageURL || "../assets/loading-skull-noun.gif"}
+                  alt={`Noun ${nounId}`}
+                />
+                <Text
+                  variant="extraLarge"
+                  className={NounTitle}
+                  color="yellow"
+                  transform="uppercase"
+                >
+                  {config.name} {nounId}
+                  <ArrowUpRight
+                    className={NounTitleArrow}
+                    color={vars.colors.yellow}
+                  />
+                </Text>
+              </Box>
+            </a>
+          </Box>
+          {!auction && !isAuctionLoading && noun && (
+            <Box className={AuctionMetaContainer}>
+              <Box>
+                <Text className={AuctionRowLabel} variant="label">
+                  Winning Bid
+                </Text>
+                <Text variant="large" color="text" marginBottom="1">
+                  N/A
+                </Text>
+                <a
+                  href={getEtherscanLink(
+                    EtherscanPageType.ADDRESS,
+                    ownerENSName || noun.owner.address
+                  )}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Text
+                    color="textSecondary"
+                    weight="medium"
+                    transform={
+                      bidderENSName || ownerENSName ? "uppercase" : undefined
+                    }
+                  >
+                    {ownerENSName || shortenAddress(noun.owner.address)}
+                  </Text>
+                </a>
+              </Box>
+              <Box>
+                <Text className={AuctionRowLabel} variant="label">
+                  Holder
+                </Text>
+                <Box>
+                  <Box display="flex" alignItems="center" marginBottom="1">
+                    {ownerAvatarURI ? (
+                      <Avatar
+                        label="Avatar"
+                        src={ownerAvatarURI}
+                        size="3"
+                        shape="square"
+                      />
+                    ) : (
+                      <Box
+                        width="3"
+                        height="3"
+                        backgroundColor="yellow"
+                        borderRadius="medium"
+                      />
+                    )}
+                    <Text
+                      variant="medium"
+                      marginLeft="1.5"
+                      transform={ownerENSName ? "uppercase" : undefined}
+                      ellipsis
+                    >
+                      {ownerENSName || shortenAddress(noun.owner.address)}
+                    </Text>
+                  </Box>
+
+                  <Box
+                    as="a"
+                    display="flex"
+                    alignItems="center"
+                    rel="noreferrer"
+                    href={getEtherscanLink(
+                      EtherscanPageType.TOKEN,
+                      NOUN_TOKEN_ADDRESS,
+                      `a=${noun.owner.address}`
+                    )}
+                    target="_blank"
+                  >
+                    <Text
+                      underline="hover"
+                      color="textSecondary"
+                      transform="uppercase"
+                      marginRight="0.5"
+                    >
+                      View on Etherscan
+                    </Text>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          )}
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box>

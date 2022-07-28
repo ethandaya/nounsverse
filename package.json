@@ -10,10 +10,17 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "deploy": "dotenv -e .env.$STAGE -- npm-run-all deploy:typesense deploy:api",
+    "deploy:dev": "STAGE=dev yarn deploy",
+    "deploy:api": "fly deploy -a $API_PROJECT_NAME --dockerfile ./apps/api/Dockerfile --config ./apps/api/fly.toml --remote-only",
+    "deploy:typesense": "fly deploy -a $TYPESENSE_PROJECT_NAME --dockerfile ./apps/typesense/Dockerfile --config ./apps/typesense/fly.toml --remote-only"
   },
   "devDependencies": {
+    "@nestjs/cli": "^8.0.0",
+    "dotenv-cli": "^6.0.0",
     "eslint-config-custom": "*",
+    "npm-run-all": "^4.1.5",
     "prettier": "latest",
     "turbo": "latest"
   },
@@ -21,6 +28,5 @@
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "packageManager": "yarn@1.22.15"
 }
